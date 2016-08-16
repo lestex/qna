@@ -63,7 +63,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
       it 'redirects to show view' do
         post :create, params: {question: attributes_for(:question)}
-        expect(response).to redirect_to question_path(assigns(:question))
+        expect(response).to redirect_to assigns(:question)
       end
     end
 

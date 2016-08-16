@@ -10,7 +10,7 @@ RSpec.describe AnswersController, type: :controller do
       end
       it 'redirect to question show view' do
         post :create, params: { answer: attributes_for(:answer), question_id: question }
-        expect(response).to redirect_to question_path(question)
+        expect(response).to redirect_to question
       end
     end
 
@@ -20,7 +20,7 @@ RSpec.describe AnswersController, type: :controller do
       end
       it 'redirects to question show view' do
         post :create, params: { answer: attributes_for(:invalid_answer), question_id: question }
-        expect(response).to redirect_to question_path(question)
+        expect(response).to redirect_to question
       end
     end
   end
