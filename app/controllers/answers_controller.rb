@@ -4,7 +4,7 @@ class AnswersController < ApplicationController
     if @question.answers.create(answer_params)
       redirect_to @question
     else
-      render question_path(@question)
+      render :new
     end
   end
 
