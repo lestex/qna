@@ -15,7 +15,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'devise'
 gem 'bootstrap-sass'
-gem 'slim'
+gem 'slim-rails'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -26,6 +26,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rails-controller-testing'
   gem 'factory_girl_rails'
+  gem 'guard-rspec', require: false
 end
 
 group :development do
