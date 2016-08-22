@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'User sign in', %q{
   In order to ask question
-  As an User
+  As a User
   Guest needs to be able to sign in
 } do
   scenario 'Registered user tries to sign in' do
