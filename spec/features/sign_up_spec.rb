@@ -5,19 +5,15 @@ feature 'User sign up', %q{
   As a User
   Guest needs to be able to sign in
 } do
+  given(:user) { create(:user) }
+
   scenario 'Registered user tries to sign up' do
-    User.create!(email: 'user@test.com', password: '123456')
-    
-    visit new_user_registration_path
-    fill_in 'Email', with: 'user@test.com'
-    fill_in 'Password', with: '123456'
-    fill_in 'Password confirmation', with: '123456'
-    click_on 'Sign up'
+    sign_up_user(user)
 
     expect(page).to have_content 'Email has already been taken'
     expect(current_path).to eq '/users'
   end
-
+  
   scenario 'Unregistered user tries to sign up' do
     visit new_user_registration_path
     fill_in 'Email', with: 'user@test.com'
