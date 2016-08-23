@@ -1,0 +1,55 @@
+doctype html
+html lang="en"
+  head
+    meta charset="utf-8"
+    meta http-equiv="X-UA-Compatible" content="IE=edge"
+    meta name="viewport" content="width=device-width, initial-scale=1"
+    title StackOverflow (clone)
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+
+  body
+
+    nav.navbar.navbar-default role="navigation"
+      .container
+        .navbar-header
+          button.navbar-toggle type="button" data-toggle="collapse" data-target="#navbar-collapse-1"
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand href="#{root_path}"
+            ' StackOverflow
+            small clone
+        .collapse.navbar-collapse#navbar-collapse-1
+          ul.nav.navbar-nav
+            li
+              = link_to 'Ask question', new_question_path
+            
+          p.navbar-text.navbar-right
+            - if user_signed_in?
+              ' Signed in as
+              => link_to current_user.email, root_path, class: 'navbar-link'
+              | (
+              = link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'navbar-link'
+              | )
+            - else
+              => link_to 'Sign in', new_user_session_path, class: 'navbar-link'
+              ' |
+              = link_to 'Sign up', new_user_registration_path, class: 'navbar-link'
+
+    main
+      .container
+        p
+          .notice
+            = notice
+        p 
+          .alert
+            = alert
+
+        == yield
+    footer.text-muted
+      .container
+        .text-center QNA - happy answers site
+
