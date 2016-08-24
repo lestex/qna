@@ -1,4 +1,6 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!, only: [:create]
+
   def create
     @question = Question.find(params[:question_id])
     if @question.answers.create(answer_params)
@@ -10,6 +12,6 @@ class AnswersController < ApplicationController
 
   private
   def answer_params
-    params.require(:answer).permit(:body)    
+    params.require(:answer).permit(:body) 
   end
 end

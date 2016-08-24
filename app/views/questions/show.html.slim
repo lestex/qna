@@ -1,4 +1,14 @@
-p
-  = @question.title
-p 
-  = @question.body
+h2= @question.title
+br= @question.body
+br 
+  - if @question.answers.any?
+    - @question.answers.each do |a|
+      .row
+        = a.body
+  - else
+    .row No answers Here
+
+  = form_for [@question, @answer] do |f|
+    = f.label :body
+    = f.text_area :body
+    =f.submit 'Answer a question', class: 'btn btn-primary'
