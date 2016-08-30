@@ -10,7 +10,7 @@ class AnswersController < ApplicationController
       redirect_to @question
     else
       flash[:danger] = @answer.errors.full_messages      
-      redirect_to @question 
+      render 'questions/show'
     end
   end
 
