@@ -1,10 +1,10 @@
 h2= @question.title
 p= @question.body
-- if current_user && current_user.questions.exists?(@question.id)
+- if current_user && current_user.owner_of?(@question)
   = link_to 'Delete question', @question, method: 'delete'
 br
 - if @question.answers.any?
   = "Number of answers: "
   span.badge="#{@question.answers.count}"
   = render @answers
-= render 'answers/answer_form'
+= render 'answers/form'

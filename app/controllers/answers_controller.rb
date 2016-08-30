@@ -6,7 +6,7 @@ class AnswersController < ApplicationController
     @answer = @question.answers.create(answer_params)
     @answer.user = current_user
     if @answer.save
-      flash[:info] = 'Created an answer'
+      flash[:success] = 'Created an answer'
       redirect_to @question
     else
       flash[:danger] = @answer.errors.full_messages      
@@ -16,9 +16,9 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer = Answer.find(params[:id])
-    if users_answer?
+    if current_user.owner_of?(@answer)
       @answer.destroy
-      flash[:success] = 'Answer has been deleted'
+      flash[:notice] = 'Answer has been deleted'
     else
       flash[:danger] = 'Answer cannot be deleted'
     end

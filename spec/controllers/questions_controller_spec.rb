@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:question) { create(:question) }
+  let(:question_with_answers) { create(:question_with_answers) }
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2) }
@@ -18,14 +19,19 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #show' do    
-    before { get :show, params: { id: question } }      
+    before { get :show, params: { id: question_with_answers } }
     
     it 'assigns the requested question to @question' do
-      expect(assigns(:question)).to eq question
+      expect(assigns(:question)).to eq question_with_answers      
     end
 
     it 'renders show view' do
       expect(response).to render_template :show
+    end
+
+    it 'assigns answers for a question' do
+      create_list(:answer, 5)
+      expect(assigns(:answers)).to eq question_with_answers.answers
     end
   end
 

@@ -7,8 +7,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @answers = @question.answers    
-    @answer = @question.answers.build
+    @answers = @question.answers
   end
 
   def new
@@ -39,7 +38,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    if users_question?
+    if current_user.owner_of?(@question)
       @question.destroy
       flash[:success] = 'Question deleted successfully'
       redirect_to questions_path
@@ -56,9 +55,5 @@ class QuestionsController < ApplicationController
 
   def question_params
     params.require(:question).permit(:title, :body)
-  end
-
-  def users_question?
-    @question.user.id == current_user.id
   end
 end
