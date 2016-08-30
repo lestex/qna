@@ -21,6 +21,7 @@ feature 'delete an answer' do
     click_on 'Delete answer'
 
     expect(page).to have_current_path(question_path(question))
+    expect(page).to have_content 'Answer has been deleted'
     expect(page).not_to have_content 'User answer'
     expect(page).not_to have_link 'Delete answer'
   end

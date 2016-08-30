@@ -21,7 +21,6 @@ feature 'Answer a question' do
       visit question_path(question)
       click_button 'Answer a question'
       
-      expect(page).to have_current_path(question_path(question))     
       expect(page).to have_content "can't be blank"
     end
   end
