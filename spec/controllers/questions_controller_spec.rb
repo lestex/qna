@@ -76,8 +76,8 @@ RSpec.describe QuestionsController, type: :controller do
       login_user
 
       context 'with valid attributes' do
-        it 'saves new question in the database' do 
-          expect { post :create, params: {question: attributes_for(:question) }}.to change(Question, :count).by(1)
+        it 'new question belongs to user' do 
+          expect { post :create, params: {question: attributes_for(:question) }}.to change(@user.questions, :count).by(1)
         end
         it 'redirects to show view' do
           post :create, params: {question: attributes_for(:question)}
@@ -141,16 +141,32 @@ RSpec.describe QuestionsController, type: :controller do
   describe 'DELETE #destroy' do
     context 'authenticated user deletes a question' do
       login_user
-      context 'user deletes own qestion' do
-        let(:user_questions) { @user.questions }
-        #before { delete :destroy, params: { id: user_questions[0] } }
+      context 'he owns' do
+        before { question.update(user_id: @user.id) }
+        it 'deletes question' do
+          expect { delete :destroy, params: { id: question} }.to change(Question, :count).by(-1)
+        end
         
-        #it { should redirect_to(root_path) }
-        #it { should set_flash[:success].to(t('flash.danger.destroy_question')) }
+        it 'redirects to show view' do
+          delete :destroy, params: { id: question}
+          expect(response).to redirect_to assigns(:question)
+        end
+      end
+    end
+
+    context 'he doesnt own' do
+      before { question }
+      it 'does not delete question' do
+        expect { delete :destroy, params: { id: question} }.to_not change(Question, :count)
       end
     end
 
     context 'unauthenticated user deletes a question' do
+      it 'redirects to login url and show errors' do
+        delete :destroy, params: { id: question}
+        expect(response).to redirect_to new_user_session_path
+        should set_flash[:alert].to 'You need to sign in or sign up before continuing.'
+      end
     end
   end
 end
