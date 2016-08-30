@@ -13,10 +13,4 @@ module FeaturesHelper
     fill_in 'Password confirmation', with: user.password_confirmation
     click_button 'Sign up'
   end
-
-  def create_answer(question)
-    visit question_path(question)
-    fill_in 'Body', with: 'The new answer'
-    click_button 'Answer a question'
-  end
 end

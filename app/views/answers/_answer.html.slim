@@ -1,0 +1,4 @@
+hr
+p=answer.body
+- if current_user && current_user.answers.exists?(answer.id)
+  = link_to 'Delete answer', question_answer_path(@question, answer), method: 'delete'

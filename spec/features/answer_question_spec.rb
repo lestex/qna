@@ -1,23 +1,36 @@
 require 'rails_helper'
 
-feature 'User can answer a question' do
+feature 'Answer a question' do
+
   given(:user) {create(:user)}
   given(:question) {create(:question)}
 
-  context 'when signed in' do
-    scenario 'User can answer a question' do
-      log_in_user(user)
-      create_answer(question)
+  context 'Authenticated user' do
+    before {log_in_user(user)}
 
+    scenario 'creates a valid answer to a question' do       
+      visit question_path(question)
+      fill_in 'answer_body', with: 'The new answer'    
+      click_button 'Answer a question'
+
+      expect(page).to have_current_path(question_path(question))
       expect(page).to have_content 'The new answer'
-    end  
+    end
+
+    scenario 'creates an invalid answer to a question' do
+      visit question_path(question)
+      click_button 'Answer a question'
+      
+      expect(page).to have_current_path(question_path(question))     
+      expect(page).to have_content "can't be blank"
+    end
   end
 
-  context 'when not signed in' do
-    scenario 'User redirected to a login form' do
-      create_answer(question)
-      
-      expect(page).to have_content 'You need to sign'
+  context 'Unauthenticated user' do
+    scenario 'creates an answer to a question' do
+      visit question_path(question)
+
+      expect(page).not_to have_content 'Answer a question'
     end
   end
 end

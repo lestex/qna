@@ -1,14 +1,10 @@
 h2= @question.title
-br= @question.body
-br 
-  - if @question.answers.any?
-    - @question.answers.each do |a|
-      .row
-        = a.body
-  - else
-    .row No answers Here
-
-  = form_for [@question, @answer] do |f|
-    = f.label :body
-    = f.text_area :body
-    =f.submit 'Answer a question', class: 'btn btn-primary'
+p= @question.body
+- if current_user && current_user.questions.exists?(@question.id)
+  = link_to 'Delete question', @question, method: 'delete'
+br
+- if @question.answers.any?
+  = "Number of answers: "
+  span.badge="#{@question.answers.count}"
+  = render @answers
+= render 'answers/answer_form'

@@ -3,17 +3,34 @@ class AnswersController < ApplicationController
 
   def create
     @question = Question.find(params[:question_id])
-    @answer = @question.answers.new(answer_params)
+    @answer = @question.answers.create(answer_params)
     @answer.user = current_user
     if @answer.save
+      flash[:info] = 'Created an answer'
       redirect_to @question
     else
-      render :new
+      flash[:danger] = @answer.errors.full_messages      
+      redirect_to @question 
     end
+  end
+
+  def destroy
+    @answer = Answer.find(params[:id])
+    if users_answer?
+      @answer.destroy
+      flash[:success] = 'Answer has been deleted'
+    else
+      flash[:danger] = 'Answer cannot be deleted'
+    end
+    redirect_to @answer.question
   end
 
   private
   def answer_params
     params.require(:answer).permit(:body) 
+  end
+
+  def users_answer?
+    @answer.user_id == current_user.id
   end
 end

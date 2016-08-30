@@ -6,14 +6,13 @@ feature 'Viewing questions and answers' do
 
   scenario 'User can view questions' do
     visit questions_path
-    
+
     expect(page).to have_content question.title
-    expect(page).to have_content question.body
   end
 
   scenario 'User can view answers for question' do
     visit question_path(question)
-    
+
     expect(page).to have_content answer.body
   end
 end
