@@ -10,7 +10,11 @@ feature 'delete a question' do
       click_on 'Delete question'
 
       expect(page).not_to have_current_path(question_path(user.questions.last))    
-      expect(page).to have_content 'deleted successfully'    
+      expect(page).to have_content 'deleted successfully'
+
+      visit question_path(user.questions.last)
+      save_and_open_page
+      expect(response).to eq 'test'
     end
 
     scenario "deletes a question he didn't asked" do
