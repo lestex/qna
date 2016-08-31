@@ -2,7 +2,8 @@ require 'rails_helper'
 
 feature 'delete a question' do
   given(:user) { create(:user_with_question) }
-  given(:question) { create(:question) }  
+  given(:question) { create(:question) }
+
   context 'authenticated user' do
     scenario 'deletes a question he asked' do
       log_in_user(user)
@@ -11,10 +12,7 @@ feature 'delete a question' do
 
       expect(page).not_to have_current_path(question_path(user.questions.last))    
       expect(page).to have_content 'deleted successfully'
-
-      visit question_path(user.questions.last)
-      save_and_open_page
-      expect(response).to eq 'test'
+      expect(page).not_to have_content user.questions.last
     end
 
     scenario "deletes a question he didn't asked" do
