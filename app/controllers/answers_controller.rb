@@ -9,7 +9,7 @@ class AnswersController < ApplicationController
       flash[:success] = 'Created an answer'
       redirect_to @question
     else
-      flash[:danger] = @answer.errors.full_messages
+      flash[:danger] = 'Answer not created'
       render 'questions/show'
     end
   end

@@ -12,6 +12,9 @@ RSpec.describe AnswersController, type: :controller do
         it 'new answer belongs to user' do
           expect { post :create, params: { answer: attributes_for(:answer), question_id: question }}.to change(@user.answers, :count).by(1)
         end
+        it 'saves the new answer in the database' do
+          expect { post :create, params: { answer: attributes_for(:answer), question_id: question }}.to change(Answer, :count).by(1)
+        end
         it 'redirect to question show view' do
           post :create, params: { answer: attributes_for(:answer), question_id: question }
           expect(response).to redirect_to question
@@ -64,10 +67,10 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
 
-    context 'unauthenticated user deletes answer' do      
-      it 'redirects to question' do
-        delete :destroy, params: { question_id: question.id, id: answer.id }
-        expect(response).to redirect_to new_user_session_path
+    context 'unauthenticated user' do      
+      it 'cant delete answer' do
+        answer
+        expect{ delete :destroy, params: { question_id: question.id, id: answer.id } }.not_to change(Answer, :count)
       end
     end
   end

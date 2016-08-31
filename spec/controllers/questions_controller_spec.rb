@@ -79,6 +79,9 @@ RSpec.describe QuestionsController, type: :controller do
         it 'new question belongs to user' do 
           expect { post :create, params: {question: attributes_for(:question) }}.to change(@user.questions, :count).by(1)
         end
+        it 'saves the new question in the database' do
+          expect { post :create, params: {question: attributes_for(:question) }}.to change(Question, :count).by(1)
+        end
         it 'redirects to show view' do
           post :create, params: {question: attributes_for(:question)}
           expect(response).to redirect_to assigns(:question)
@@ -98,9 +101,13 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
     context 'unauthenticated user creates a question' do
-      it 'redirects to login url and show errors' do
-        post :create, params: { question: attributes_for(:question) }
-        expect(response).to redirect_to new_user_session_path        
+      it 'cant create' do
+        expect { post :create, params: { question: attributes_for(:question) }}
+          .not_to change(Question, :count)        
+      end
+      it 'redirects to login url' do        
+        expect(post :create, params: { question: attributes_for(:question) })
+          .to redirect_to new_user_session_path        
       end
     end
   end
@@ -129,9 +136,9 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'unauthenticated user deletes a question' do
-      it 'redirects to login url and show errors' do
-        delete :destroy, params: { id: question}
-        expect(response).to redirect_to new_user_session_path        
+      it 'cant delete' do
+        question
+        expect { delete :destroy, params: { id: question} }.to_not change(Question, :count)
       end
     end
   end
