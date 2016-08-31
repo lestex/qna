@@ -40,12 +40,11 @@ class QuestionsController < ApplicationController
   def destroy
     if current_user.owner_of?(@question)
       @question.destroy
-      flash[:success] = 'Question deleted successfully'
-      redirect_to questions_path
+      flash[:success] = 'Question deleted successfully'      
     else
-      flash.now[:danger] = 'You cannot delete this question'
-      render :show
+      flash.now[:danger] = 'You cannot delete this question'      
     end
+    redirect_to questions_path
   end
 
   private

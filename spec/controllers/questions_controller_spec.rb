@@ -82,7 +82,7 @@ RSpec.describe QuestionsController, type: :controller do
         it 'redirects to show view' do
           post :create, params: {question: attributes_for(:question)}
           expect(response).to redirect_to assigns(:question)
-          should set_flash[:success].to 'question created successfully'
+          expect(flash[:success]).to match 'question created successfully'          
         end
       end
 
@@ -100,8 +100,7 @@ RSpec.describe QuestionsController, type: :controller do
     context 'unauthenticated user creates a question' do
       it 'redirects to login url and show errors' do
         post :create, params: { question: attributes_for(:question) }
-        expect(response).to redirect_to new_user_session_path
-        should set_flash[:alert].to 'You need to sign in or sign up before continuing.'
+        expect(response).to redirect_to new_user_session_path        
       end
     end
   end
@@ -132,8 +131,7 @@ RSpec.describe QuestionsController, type: :controller do
     context 'unauthenticated user deletes a question' do
       it 'redirects to login url and show errors' do
         delete :destroy, params: { id: question}
-        expect(response).to redirect_to new_user_session_path
-        should set_flash[:alert].to 'You need to sign in or sign up before continuing.'
+        expect(response).to redirect_to new_user_session_path        
       end
     end
   end
