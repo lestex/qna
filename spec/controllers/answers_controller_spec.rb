@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  describe 'POST #create' do
-    let(:question) { create :question }
+  let(:question) { create :question }
+  let(:answer) { create(:answer, question: question) }
 
+  describe 'POST #create' do
     context 'authenticated user creates answer' do
       login_user
 
@@ -23,7 +24,7 @@ RSpec.describe AnswersController, type: :controller do
         end
         it 'redirects to question show view' do
           post :create, params: { answer: attributes_for(:invalid_answer), question_id: question }
-          expect(response).to render_template :show
+          expect(response).to redirect_to question
         end
       end
     end
@@ -36,12 +37,31 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
-  describe 'POST #create' do
+  describe 'DELETE #destroy' do
+    let(:answer) { create(:answer, question: question) }
+
     context 'authenticated user deletes answer' do
       login_user
-    end
+      context 'he owns' do
+        it 'deletes answer' do
+          answer.update(user_id: @user.id)
+          expect{ delete :destroy, params: { question_id: question.id, id: answer.id } }.to change(@user.answers, :count).by(-1)
+        end
 
-    context 'unauthenticated user deletes answer' do
+        it 'redirects to question' do
+          expect( delete :destroy, params: { question_id: question.id, id: answer.id } ).to redirect_to answer.question
+        end
+      end
+      context "he doesn't own" do
+        it 'not deletes answer' do
+          answer
+          expect{ delete :destroy, params: { question_id: question.id, id: answer.id } }.not_to change(Answer, :count)
+        end
+
+        it 'redirects to question' do
+          expect( delete :destroy, params: { question_id: question.id, id: answer.id } ).to redirect_to answer.question
+        end
+      end
     end
   end
 end

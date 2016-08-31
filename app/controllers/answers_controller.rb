@@ -9,8 +9,8 @@ class AnswersController < ApplicationController
       flash[:success] = 'Created an answer'
       redirect_to @question
     else
-      flash[:danger] = @answer.errors.full_messages      
-      render 'questions/show'
+      flash[:danger] = @answer.errors.full_messages
+      redirect_to @question
     end
   end
 
@@ -28,9 +28,5 @@ class AnswersController < ApplicationController
   private
   def answer_params
     params.require(:answer).permit(:body) 
-  end
-
-  def users_answer?
-    @answer.user_id == current_user.id
   end
 end

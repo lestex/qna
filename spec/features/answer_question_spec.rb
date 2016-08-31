@@ -5,7 +5,7 @@ feature 'Answer a question' do
   given(:user) {create(:user)}
   given(:question) {create(:question)}
 
-  context 'Authenticated user' do
+  context 'authenticated user' do
     before {log_in_user(user)}
 
     scenario 'creates a valid answer to a question' do       
@@ -19,13 +19,13 @@ feature 'Answer a question' do
 
     scenario 'creates an invalid answer to a question' do
       visit question_path(question)
-      click_button 'Answer a question'
-      
+
+      click_button 'Answer a question'      
       expect(page).to have_content "can't be blank"
     end
   end
 
-  context 'Unauthenticated user' do
+  context 'unauthenticated user' do
     scenario 'creates an answer to a question' do
       visit question_path(question)
 

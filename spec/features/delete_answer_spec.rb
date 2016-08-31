@@ -11,7 +11,7 @@ feature 'delete an answer' do
     visit question_path(question)
     fill_in 'answer_body', with: 'User answer'
     click_on 'Answer a question'
-
+    save_and_open_page
     expect(page).to have_content('User answer')    
     expect(page).to have_link('Delete answer', 
         href: question_answer_path(question, user.answers.last.id))
