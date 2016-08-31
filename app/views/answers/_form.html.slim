@@ -1,0 +1,7 @@
+- if user_signed_in?
+  = form_for([@question, @question.answers.build]) do |f|
+    .form-group
+      = f.label :body, 'Answer:'
+      = f.text_area :body, class: 'form-control'    
+    .form-group
+      = f.submit 'Answer a question', class: 'btn btn-primary'
