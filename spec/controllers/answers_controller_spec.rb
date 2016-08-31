@@ -10,10 +10,16 @@ RSpec.describe AnswersController, type: :controller do
 
       context 'with valid attributes' do
         it 'new answer belongs to user' do
-          expect { post :create, params: { answer: attributes_for(:answer), question_id: question }}.to change(@user.answers, :count).by(1)
+          expect { post :create, params: { answer: attributes_for(:answer), question_id: question }}
+                  .to change(@user.answers, :count).by(1)
+        end
+        it 'new answer belongs to user' do
+          expect { post :create, params: { answer: attributes_for(:answer), question_id: question }}
+                  .to change(question.answers, :count).by(1)
         end
         it 'saves the new answer in the database' do
-          expect { post :create, params: { answer: attributes_for(:answer), question_id: question }}.to change(Answer, :count).by(1)
+          expect { post :create, params: { answer: attributes_for(:answer), question_id: question }}
+                  .to change(Answer, :count).by(1)
         end
         it 'redirect to question show view' do
           post :create, params: { answer: attributes_for(:answer), question_id: question }
