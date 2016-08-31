@@ -106,38 +106,6 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  describe 'PATCH #update' do
-    login_user
-    context 'valid attributes' do
-      it 'assigns the requested question to @question' do
-        patch :update, params: {id: question, question: attributes_for(:question)}
-        expect(assigns(:question)).to eq question
-      end
-      it 'changes question attributes' do
-        patch :update, params: {id: question, question: {title: 'new title', body: 'new body'}}
-        question.reload
-        expect(question.title).to eq 'new title'
-        expect(question.body).to eq 'new body'
-      end
-      it 'redirects to the updated question' do
-        patch :update, params: {id: question, question: attributes_for(:question)}
-        expect(response).to redirect_to question
-      end 
-    end
-
-    context 'invalid attributes' do
-      before { patch :update, params: {id: question, question: {title: 'new title', body: nil}} }
-      it 'does not change question attributes' do        
-        question.reload
-        expect(question.title).to eq 'Question title'
-        expect(question.body).to eq 'Question body'
-      end
-      it 're-renders edit view' do
-        expect(response).to render_template :edit
-      end 
-    end
-  end
-
   describe 'DELETE #destroy' do
     context 'authenticated user deletes a question' do
       login_user
@@ -154,7 +122,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
 
-    context 'he doesnt own' do
+    context "he doesn't own" do
       before { question }
       it 'does not delete question' do
         expect { delete :destroy, params: { id: question} }.to_not change(Question, :count)
