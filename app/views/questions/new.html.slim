@@ -1,0 +1,10 @@
+= form_for @question do |f|
+  .form-group
+    = f.label :title
+    = f.text_field :title, class: 'form-control', autofocus: true
+    br
+    = f.label :body
+    = f.text_area :body, class: 'form-control'
+    br
+  .form-group 
+    =f.submit 'Create question', class: 'btn btn-primary'
