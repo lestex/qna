@@ -70,7 +70,12 @@ RSpec.describe AnswersController, type: :controller do
     context 'unauthenticated user' do      
       it 'cant delete answer' do
         answer
-        expect{ delete :destroy, params: { question_id: question.id, id: answer.id } }.not_to change(Answer, :count)
+        expect{ delete :destroy, params: { question_id: question.id, id: answer.id } }
+            .not_to change(Answer, :count)
+      end
+      it 'redirects to login form' do
+        expect( delete :destroy, params: { question_id: question.id, id: answer.id })
+            .to redirect_to new_user_session_path
       end
     end
   end

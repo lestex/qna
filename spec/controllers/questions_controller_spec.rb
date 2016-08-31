@@ -140,6 +140,10 @@ RSpec.describe QuestionsController, type: :controller do
         question
         expect { delete :destroy, params: { id: question} }.to_not change(Question, :count)
       end
+      it 'redirects to login form' do
+        expect( delete :destroy, params: { id: question})
+            .to redirect_to new_user_session_path
+      end
     end
   end
 end
