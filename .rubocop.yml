@@ -1,0 +1,19 @@
+Rails:
+  Enabled: true
+
+AllCops:
+  Exclude:
+    - bin/*
+    - db/schema.rb
+    - config/initializers/*
+    - db/migrate/*_devise_*
+    - Guardfile
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 100
