@@ -5,9 +5,7 @@ class AnswersController < ApplicationController
     @question = Question.find(params[:question_id])
     @answer = @question.answers.create(answer_params)
     @answer.user = current_user
-    if @answer.save
-      flash[:success] = 'Created an answer'
-    end
+    @answer.save
   end
 
   def destroy
