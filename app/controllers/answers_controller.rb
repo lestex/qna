@@ -7,10 +7,6 @@ class AnswersController < ApplicationController
     @answer.user = current_user
     if @answer.save
       flash[:success] = 'Created an answer'
-      redirect_to @question
-    else
-      flash[:danger] = @answer.errors.full_messages
-      render 'questions/show'
     end
   end
 
