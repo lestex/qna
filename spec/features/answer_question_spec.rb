@@ -14,7 +14,9 @@ feature 'Answer a question' do
       click_button 'Answer a question'
 
       expect(page).to have_current_path(question_path(question))
-      expect(page).to have_content 'The new answer'
+      within '.answers' do 
+        expect(page).to have_content 'The new answer'
+      end
     end
 
     scenario 'creates an invalid answer to a question' do

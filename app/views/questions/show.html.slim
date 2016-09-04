@@ -6,6 +6,6 @@ br
 - if @question.answers.any?
   = "Number of answers: "
   span.badge="#{@question.answers.count}"
-.answers
-  = render @question.answers
+  .answers
+    = render @question.answers
 = render 'answers/form'

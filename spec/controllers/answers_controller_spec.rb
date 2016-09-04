@@ -39,6 +39,9 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context 'unauthenticated user creates answer' do
+      it 'does not save answer in database' do
+          expect { post :create, params: { answer: attributes_for(:answer), question_id: question }}.to_not change(Answer, :count)
+        end
       it 'redirects to a login form' do
         post :create, params: { answer: attributes_for(:answer), question_id: question }
         expect(response).to redirect_to new_user_session_path
