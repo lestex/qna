@@ -27,6 +27,8 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'factory_girl_rails'
   gem 'guard-rspec', require: false
+  gem 'selenium-webdriver'
+  gem 'database_cleaner'
 end
 
 group :development do
