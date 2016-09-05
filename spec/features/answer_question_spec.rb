@@ -13,7 +13,6 @@ feature 'Answer a question' do
       fill_in 'answer_body', with: 'The new answer'    
       click_button 'Answer a question'
 
-      expect(page).to have_current_path(question_path(question))
       within '.answers' do 
         expect(page).to have_content 'The new answer'
       end
