@@ -3,9 +3,7 @@ class AnswersController < ApplicationController
 
   def create
     @question = Question.find(params[:question_id])
-    #@question.answers.create(answer_params.merge(user: current_user))
     @answer = @question.answers.build(answer_params.merge(user: current_user))
-    #@answer.user = current_user
     @answer.save
   end
 
