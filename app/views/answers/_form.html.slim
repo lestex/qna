@@ -1,6 +1,5 @@
 - if user_signed_in?
-hr
-  = form_for([@question, @question.answers.build]) do |f|
+  = form_for [@question, @answer], remote: true do |f|
     .form-group
       = f.label :body, 'Answer:'
       = f.text_area :body, class: 'form-control'    

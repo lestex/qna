@@ -30,8 +30,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     it 'assigns answers for a question' do
-      create_list(:answer, 5)
-      expect(assigns(:answers)).to eq question_with_answers.answers
+      expect(assigns(:answer)).to be_a_new(Answer)
     end
   end
 
