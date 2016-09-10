@@ -1,3 +1,10 @@
-$(".answers_count").html("<%= j render 'count' %>");
-$("<%= j render(@answer) %>").appendTo('.answers');
-$('#answer_body').val('');
+<% if @answer.errors.present? %>
+  <% @answer.errors.full_messages.each do |message| %>
+    $('.answer-message').html('<%= j message %>')
+  <% end %>
+<% else %>
+  $('.answer-message').html('Your answer created successfully.')
+  $(".answers_count").html("<%= j render 'count' %>");
+  $('.answers').append('<%= j render @answer %>')
+  $('#answer_body').val('');
+<% end %>
