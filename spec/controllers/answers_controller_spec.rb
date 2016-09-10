@@ -37,10 +37,10 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'unauthenticated user creates answer' do
       it 'does not save answer in database' do
-          expect { post :create, params: { answer: attributes_for(:answer), question_id: question }}.to_not change(Answer, :count)
+          expect { post :create, params: { answer: attributes_for(:answer), question_id: question }, format: :js}.to_not change(Answer, :count)
         end
       it 'redirects to a login form' do
-        post :create, params: { answer: attributes_for(:answer), question_id: question }
+        post :create, params: { answer: attributes_for(:answer), question_id: question }, format: :js
         expect(response).to redirect_to new_user_session_path
       end
     end
@@ -72,11 +72,11 @@ RSpec.describe AnswersController, type: :controller do
     context 'unauthenticated user' do      
       it 'cant delete answer' do
         answer
-        expect{ delete :destroy, params: { question_id: question.id, id: answer.id } }
+        expect{ delete :destroy, params: { question_id: question.id, id: answer.id }, format: :js }
             .not_to change(Answer, :count)
       end
       it 'redirects to login form' do
-        expect( delete :destroy, params: { question_id: question.id, id: answer.id })
+        expect( delete :destroy, params: { question_id: question.id, id: answer.id }, format: :js)
             .to redirect_to new_user_session_path
       end
     end
