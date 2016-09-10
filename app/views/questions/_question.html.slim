@@ -1,3 +1,11 @@
-.
-  = link_to question.title, question
-  hr
+div class="panel panel-default"
+  .panel-heading
+    h3.panel-title
+      = link_to question.title, question
+  .panel-body
+    p=  question.body
+  - if current_user && current_user.owner_of?(question)
+    .panel-footer
+      = link_to 'Delete question', question, method: :delete, remote: true
+      |  | 
+      = link_to 'Edit', '', class: 'edit-question-link'

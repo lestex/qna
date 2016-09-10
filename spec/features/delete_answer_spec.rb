@@ -1,6 +1,6 @@
 require_relative 'features_helper'
 
-feature 'delete an answer' do
+feature 'Delete answer' do
 
   let(:user) { create(:user) }
   let(:question) { create(:question) }
@@ -29,7 +29,7 @@ feature 'delete an answer' do
     scenario 'link delete is not present' do
       visit question_path(question)
     
-      expect(page).to_not have_link('Delete answer')
+      expect(page).to_not have_link 'Delete answer'
     end
   end
 end

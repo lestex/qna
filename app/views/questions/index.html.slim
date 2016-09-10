@@ -1,4 +1,5 @@
 h1 Questions
-hr
-  = render @questions
+- if @questions
+  - @questions.each do |question|
+    p= link_to question.title, question
   

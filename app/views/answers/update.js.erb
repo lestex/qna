@@ -1,0 +1,8 @@
+<% if @answer.errors.present? %>
+  <% @answer.errors.full_messages.each do |message| %>
+    $('.answer-message').html('<%= j message %>')
+  <% end %>
+<% else %>
+  $('.answer-message').html('Your answer updated successfully.')
+  $('.answer-' + '<%= @answer.id %>').replaceWith('<%= j render @answer %>');
+<% end %>
