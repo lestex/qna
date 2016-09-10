@@ -1,5 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, only: [:create, :destroy]
+  before_action :load_answer, only: [:destroy]
 
   def create
     @question = Question.find(params[:question_id])
@@ -8,18 +9,15 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    @answer = Answer.find(params[:id])
-    if current_user.owner_of?(@answer)
-      @answer.destroy
-      flash[:notice] = 'Answer has been deleted'
-    else
-      flash[:danger] = 'Answer cannot be deleted'
-    end
-    redirect_to @answer.question
+    @answer.destroy! if current_user.owner_of?(@answer)
   end
 
   private
   def answer_params
     params.require(:answer).permit(:body) 
+  end
+  
+  def load_answer
+    @answer = Answer.find(params[:id])
   end
 end

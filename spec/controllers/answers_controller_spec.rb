@@ -54,21 +54,17 @@ RSpec.describe AnswersController, type: :controller do
       context 'he owns' do
         it 'deletes answer' do
           answer.update(user_id: @user.id)
-          expect{ delete :destroy, params: { question_id: question.id, id: answer.id } }.to change(@user.answers, :count).by(-1)
+          expect{ delete :destroy, params: { question_id: question.id, id: answer.id }, format: :js}.to change(@user.answers, :count).by(-1)
         end
 
-        it 'redirects to question' do
-          expect( delete :destroy, params: { question_id: question.id, id: answer.id } ).to redirect_to answer.question
+        it 'renders destroy template' do
+          expect( delete :destroy, params: { question_id: question.id, id: answer.id }, format: :js ).to render_template :destroy
         end
       end
       context "he doesn't own" do
         it 'not deletes answer' do
           answer
-          expect{ delete :destroy, params: { question_id: question.id, id: answer.id } }.not_to change(Answer, :count)
-        end
-
-        it 'redirects to question' do
-          expect( delete :destroy, params: { question_id: question.id, id: answer.id } ).to redirect_to answer.question
+          expect{ delete :destroy, params: { question_id: question.id, id: answer.id }, format: :js }.not_to change(Answer, :count)
         end
       end
     end

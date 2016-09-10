@@ -4,7 +4,6 @@
   <% end %>
 <% else %>
   $('.answer-message').html('Your answer created successfully.')
-  $(".answers_count").html("<%= j render 'count' %>");
   $('.answers').append('<%= j render @answer %>')
   $('#answer_body').val('');
 <% end %>

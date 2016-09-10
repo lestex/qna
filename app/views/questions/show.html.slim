@@ -4,9 +4,6 @@ p= @question.body
   = link_to 'Delete question', @question, method: :delete
 hr
 - if @question.answers.any?
-  .answers_count 
-    = render 'answers/count'
-  hr
   .answers
     = render @question.answers
 = render 'answers/form'
