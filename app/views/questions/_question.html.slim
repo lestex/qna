@@ -1,11 +1,18 @@
-div class="panel panel-default"
+div class="panel panel-default question"
   .panel-heading
     h3.panel-title
       = link_to question.title, question
   .panel-body
     p=  question.body
-  - if current_user && current_user.owner_of?(question)
-    .panel-footer
-      = link_to 'Delete question', question, method: :delete, remote: true
-      |  | 
-      = link_to 'Edit', '', class: 'edit-question-link'
+    - if current_user && current_user.owner_of?(question)
+        p= link_to 'Delete question', question, method: :delete, remote: true 
+        p= link_to 'Edit', '', class: 'edit-question-link'
+        = form_for question, remote: true, html: { id: 'edit-question-form' } do |f|
+          .question-message
+          .form-group
+            = f.label :title
+            = f.text_field :title, class: 'form-control'
+          .form-group
+             = f.label :body
+             = f.text_area :body, class: 'form-control'
+          p= f.submit 'Save', class: 'btn btn-primary'

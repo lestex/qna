@@ -1,0 +1,8 @@
+<% if @question.errors.present? %>
+  <% @question.errors.full_messages.each do |message| %>
+    $('.question-message').html('<%= j message %>')
+  <% end %>
+<% else %>
+  $('.question-message').html('Your question updated successfully.')
+  $('.question').replaceWith('<%= j render @question %>');
+<% end %>
