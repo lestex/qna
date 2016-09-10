@@ -9,7 +9,6 @@ class AnswersController < ApplicationController
   end
 
   def update
-    @question = Question.find(params[:question_id])
     @answer.update(answer_params) if current_user.owner_of?(@answer)
   end
 
