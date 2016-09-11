@@ -105,4 +105,31 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'PUT #mark_best' do
+    context 'author of an answer' do
+      let(:answer) { create(:answer, question: question, user: question.user) }
+      before { sign_in(answer.user) }
+      it 'marks it best' do
+        put :mark_best, params: { id: answer }, format: :js
+        answer.reload
+        expect(answer.best).to eq true
+      end
+      it 'renders best template' do
+        put :mark_best, params: { id: answer }, format: :js
+        answer.reload
+        expect(response).to render_template 'answers/mark_best'
+      end
+    end
+
+    context 'non-another conditions' do
+      let(:user) { create(:user) }
+      it 'does not change the best answer' do
+        sign_in(user)
+        put :mark_best, params: { id: answer }, format: :js
+        answer.reload
+        expect(answer.best).to eq false
+      end
+    end
+  end
 end

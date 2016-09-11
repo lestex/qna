@@ -1,4 +1,4 @@
-require_relative 'features_helper'
+require_relative '../features_helper'
 
 feature 'Edit answer' do
   given(:user) { create(:user) }
