@@ -28,8 +28,20 @@ feature 'Mark best answer' do
         click_on 'Mark as best'
       end
       expect(page).not_to have_selector('.answer-2.best-answer')
-      expect(page).to have_link('Mark as best', count: 2)
       expect(page).to have_selector('.best-answer', count: 1)
+      expect(page).to have_link('Mark as best', count: 2)
+    end
+
+    scenario 'best answer is always first in the list', js: true do
+      log_in_user(question.user)
+      visit question_path(question)
+      within '.answer-3' do
+        click_on 'Mark as best'
+      end
+      sleep 1
+      within '.answers' do
+        expect(page.first('div')).to have_selector('.best-answer')
+      end
     end
 
     scenario "not author cannot mark an answer as best" do

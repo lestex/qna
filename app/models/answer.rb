@@ -7,11 +7,9 @@ class Answer < ApplicationRecord
   default_scope { order(best: :desc, created_at: :asc )}
 
   def mark_best
-    unless best
-      Answer.transaction do
-        question.answers.update_all(best: false)
-        update!(best: true)
-      end
+    transaction do
+      question.answers.update_all(best: false)
+      update!(best: true)
     end
   end
 end
