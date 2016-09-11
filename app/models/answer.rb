@@ -8,8 +8,10 @@ class Answer < ApplicationRecord
 
   def mark_best
     unless best
-      question.answers.update_all(best: false)
-      update(best: true)
+      Answer.transaction do
+        question.answers.update_all(best: false)
+        update!(best: true)
+      end
     end
   end
 end

@@ -3,9 +3,7 @@ Rails.application.routes.draw do
 
   resources :questions do
     resources :answers, shallow: true do
-      member do
-        put 'mark_best'
-      end
+      put :mark_best, on: :member
     end
   end
   root "questions#index"
