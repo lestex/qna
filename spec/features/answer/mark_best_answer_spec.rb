@@ -39,9 +39,7 @@ feature 'Mark best answer' do
         click_on 'Mark as best'
       end
       sleep 1
-      within '.answers' do
-        expect(page.first('div')).to have_selector('.best-answer')
-      end
+      expect(page.find('.answers').first('div')).to have_css('.best-answer')
     end
 
     scenario "not author cannot mark an answer as best" do
