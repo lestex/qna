@@ -17,6 +17,7 @@ gem 'devise', '~> 4.2.0'
 gem 'bootstrap-sass'
 gem 'slim-rails'
 
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -27,8 +28,9 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'factory_girl_rails'
   gem 'guard-rspec', require: false
-  gem 'selenium-webdriver'
   gem 'database_cleaner'
+  gem 'capybara'
+  gem 'capybara-webkit'
 end
 
 group :development do
@@ -40,7 +42,6 @@ end
 
 group :test do
   gem 'shoulda-matchers'
-  gem 'capybara'
   gem 'launchy'
 end
 

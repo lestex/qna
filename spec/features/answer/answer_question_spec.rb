@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../features_helper'
 
 feature 'Answer a question' do
 
@@ -19,12 +19,12 @@ feature 'Answer a question' do
       end
     end
 
-    #scenario 'creates an invalid answer to a question' do
-    #  visit question_path(question)
+    scenario 'creates an invalid answer to a question', js: true do
+      visit question_path(question)
 
-    #  click_button 'Answer a question'      
-    #  expect(page).to have_content "can't be blank"
-    #end
+      click_button 'Answer a question'      
+      expect(page).to have_content "can't be blank"
+    end
   end
 
   context 'unauthenticated user' do

@@ -2,6 +2,7 @@
   = form_for [@question, @answer], remote: true do |f|
     .form-group
       = f.label :body, 'Answer:'
+      .answer-message
       = f.text_area :body, class: 'form-control'    
     .form-group
       = f.submit 'Answer a question', class: 'btn btn-primary'

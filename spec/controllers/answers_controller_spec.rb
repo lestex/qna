@@ -54,21 +54,17 @@ RSpec.describe AnswersController, type: :controller do
       context 'he owns' do
         it 'deletes answer' do
           answer.update(user_id: @user.id)
-          expect{ delete :destroy, params: { question_id: question.id, id: answer.id } }.to change(@user.answers, :count).by(-1)
+          expect{ delete :destroy, params: { question_id: question.id, id: answer.id }, format: :js}.to change(@user.answers, :count).by(-1)
         end
 
-        it 'redirects to question' do
-          expect( delete :destroy, params: { question_id: question.id, id: answer.id } ).to redirect_to answer.question
+        it 'renders destroy template' do
+          expect( delete :destroy, params: { question_id: question.id, id: answer.id }, format: :js ).to render_template :destroy
         end
       end
       context "he doesn't own" do
         it 'not deletes answer' do
           answer
-          expect{ delete :destroy, params: { question_id: question.id, id: answer.id } }.not_to change(Answer, :count)
-        end
-
-        it 'redirects to question' do
-          expect( delete :destroy, params: { question_id: question.id, id: answer.id } ).to redirect_to answer.question
+          expect{ delete :destroy, params: { question_id: question.id, id: answer.id }, format: :js }.not_to change(Answer, :count)
         end
       end
     end
@@ -82,6 +78,57 @@ RSpec.describe AnswersController, type: :controller do
       it 'redirects to login form' do
         expect( delete :destroy, params: { question_id: question.id, id: answer.id })
             .to redirect_to new_user_session_path
+      end
+    end
+  end
+
+  describe 'PATCH #update' do
+    before { sign_in(answer.user) }
+    context 'valid attributes' do
+      it 'assigns the requested answer to @answer' do
+        patch :update, params: { id: answer, answer: attributes_for(:answer), question_id: question}, format: :js
+        expect(assigns(:answer)).to eq answer
+      end
+      before {patch :update, params: { id: answer, answer: { body: 'new body' }, question_id: question }, format: :js }
+      it 'changes attributes for the answer' do
+        answer.reload
+        expect(answer.body).to eq 'new body'
+      end
+      it 'renders update template' do
+        expect(response).to render_template :update
+      end
+    end
+    context 'invalid attributes' do
+      it 'does not change the answer' do
+        patch :update, params: { id: answer, answer: { body: '' }, question_id: question }, format: :js
+        expect(answer.body).to eq answer.body
+      end
+    end
+  end
+
+  describe 'PUT #mark_best' do
+    context 'author of an answer' do
+      let(:answer) { create(:answer, question: question, user: question.user) }
+      before { sign_in(answer.user) }
+      it 'marks it best' do
+        put :mark_best, params: { id: answer }, format: :js
+        answer.reload
+        expect(answer.best).to eq true
+      end
+      it 'renders best template' do
+        put :mark_best, params: { id: answer }, format: :js
+        answer.reload
+        expect(response).to render_template 'answers/mark_best'
+      end
+    end
+
+    context 'non-another conditions' do
+      let(:user) { create(:user) }
+      it 'does not change the best answer' do
+        sign_in(user)
+        put :mark_best, params: { id: answer }, format: :js
+        answer.reload
+        expect(answer.best).to eq false
       end
     end
   end

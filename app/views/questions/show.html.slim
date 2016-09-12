@@ -1,13 +1,7 @@
-.answer  
-  h2= @question.title
-  p= @question.body
-  - if current_user && current_user.owner_of?(@question)
-    = link_to 'Delete question', @question, method: :delete
-  hr
-  - if @question.answers.any?
-    .answers_count 
-      = render 'answers/count'
-    hr
-    .answers
-      = render @question.answers
-  = render 'answers/form'
+= render @question
+h3 Answers
+hr
+.answers
+  = render @question.answers
+
+= render 'answers/form'
