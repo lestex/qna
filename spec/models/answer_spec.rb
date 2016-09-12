@@ -24,10 +24,9 @@ RSpec.describe Answer, type: :model do
       answer1.mark_best
       expect(answer1).to be_best
     end
-    # it Нужен еще один тест: то, что старый лучший ответ стал не лучшим
     it 'sets previous best answer to false' do
-      answer1.mark_best
-      expect(answer2).to_not be_best
+      answer2.mark_best
+      expect(answer1).to_not be_best
     end
   end
 end
