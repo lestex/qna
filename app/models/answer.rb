@@ -8,7 +8,8 @@ class Answer < ApplicationRecord
 
   def mark_best
     transaction do
-      question.answers.update_all(best: false)
+      updated_count = question.answers.update_all(best: false)
+      raise ActiveRecord::Rollback unless updated_count == question.answers.count
       update!(best: true)
     end
   end

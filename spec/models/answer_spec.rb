@@ -9,22 +9,25 @@ RSpec.describe Answer, type: :model do
   it { should validate_presence_of :question_id }
   it { should validate_presence_of :user_id }
 
-  describe 'default_scope' do
-    let!(:answer) { create(:answer) }
-    let!(:answer2) { create(:answer) }
+  let(:question) { create(:question) }
+  let!(:answer1) { create(:answer, question: question, best: false) }
+  let!(:answer2) { create(:answer, question: question, best: true) }
 
-    it 'best answer should be first' do
-      answer2.update(best: true)
-      expect(Answer.all).to eq [answer2, answer]
+  describe 'default_scope' do
+    it 'sets best answer as first' do
+      expect(Answer.first).to eq answer2
     end
   end
 
-  context '.mark_best' do
-    let(:question) { create(:question) }
-    before { create(:answer, question: question) }
-    it 'sets answer.best to trues' do
-      question.answers.first.mark_best
-      expect(question.answers.first.best).to be true
+  context '.mark_best' do    
+    it 'sets answer.best to true' do
+      answer1.mark_best
+      expect(answer1).to be_best
+    end
+    # it Нужен еще один тест: то, что старый лучший ответ стал не лучшим
+    it 'sets previous best answer to false' do
+      answer1.mark_best
+      expect(answer2).to_not be_best
     end
   end
 end
