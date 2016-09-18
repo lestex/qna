@@ -1,6 +1,8 @@
 - if answer.persisted?
   div class="answer-#{answer.id} #{'best-answer' if answer.best}"
     p=answer.body
+    = render 'attachments/attachments', attachable: answer
+
     - if current_user && current_user.owner_of?(answer)
       p= link_to 'Delete answer', answer_path(answer), method: 'delete', remote: true
       - unless answer.best?
