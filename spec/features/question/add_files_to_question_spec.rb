@@ -30,6 +30,8 @@ feature 'Add files to question' do
       expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/2/spec_helper.rb'
       expect(page).to have_link 'rails_helper.rb', href: '/uploads/attachment/file/3/rails_helper.rb'
     end
+
+    scenario 'deletes an attachment'
   end
   scenario 'user can see attachments of other users', js: true do
     question.attachments << attachment
@@ -37,4 +39,6 @@ feature 'Add files to question' do
     visit question_path(question)
     expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
   end
+
+  scenario 'user cannot delete attachments of other users'
 end
