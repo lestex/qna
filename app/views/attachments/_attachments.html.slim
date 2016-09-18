@@ -2,5 +2,6 @@ p Attachments:
 ul
   - attachable.attachments.each do |a|
     li= link_to a.file.identifier, a.file.url
-    - if current_user.author_of?(attachable)
-      = link_to 'Remove Attachment', {controller: 'attachments', action: "destroy", id: a}, method: :delete, remote: true
+    - if user_signed_in? && current_user.owner_of?(attachable)
+      .delete-file-link
+        = link_to 'Delete Attachment', attachment_path(a), method: :delete, remote: true

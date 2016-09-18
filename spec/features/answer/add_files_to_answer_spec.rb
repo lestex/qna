@@ -28,8 +28,15 @@ feature 'Add files to answer' do
       expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/2/spec_helper.rb'
       expect(page).to have_link 'rails_helper.rb', href: '/uploads/attachment/file/3/rails_helper.rb'
     end
-
-    scenario 'deletes an attachment'
+  end
+  scenario 'deletes an attachment', js: true do
+    answer.attachments << attachment
+    log_in_user(answer.user)
+    visit question_path(question)
+    within '.answers' do
+      click_on 'Delete Attachment'
+      expect(page).to_not have_link 'spec_helper.rb'
+    end
   end
 
   context 'regular user' do
@@ -39,6 +46,14 @@ feature 'Add files to answer' do
       visit question_path(question)
       expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
     end
-    scenario 'cnnot delete attchment of other user'
+
+    scenario 'cannot delete an attachment of other user', js: true do
+      answer.attachments << attachment
+      log_in_user(user)
+      visit question_path(question)
+      within '.answers' do
+        expect(page).to_not have_link 'Remove Attachment'
+      end
+    end
   end
 end
