@@ -16,8 +16,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'devise', '~> 4.2.0'
 gem 'bootstrap-sass'
 gem 'slim-rails'
-
-
+gem 'carrierwave'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
