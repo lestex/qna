@@ -6,5 +6,7 @@ Rails.application.routes.draw do
       put :mark_best, on: :member
     end
   end
+  resource :attachments, only: [:destroy]
+
   root "questions#index"
 end
