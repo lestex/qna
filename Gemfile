@@ -18,6 +18,7 @@ gem 'bootstrap-sass'
 gem 'slim-rails'
 gem 'carrierwave'
 gem 'remotipart'
+gem 'cocoon'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

@@ -1,9 +1,11 @@
 class Question < ApplicationRecord
   has_many :answers, dependent: :destroy
-  # rails 5 needs inverse_of
-  has_many :attachments, as: :attachable#, inverse_of: :question
+  has_many :attachments, as: :attachable
   belongs_to :user
 
   validates :title, :body, :user_id, presence: true
-  accepts_nested_attributes_for :attachments
+  
+  accepts_nested_attributes_for :attachments,
+      reject_if: proc { |attributes| attributes['file'].blank? },
+      allow_destroy: true
 end
