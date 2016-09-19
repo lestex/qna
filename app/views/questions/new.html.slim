@@ -5,6 +5,7 @@
     br
     = f.label :body
     = f.text_area :body, class: 'form-control'
-    br
+  .form-group
+    = render 'attachments/form', f: f
   .form-group 
     =f.submit 'Create question', class: 'btn btn-primary'

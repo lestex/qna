@@ -1,0 +1,7 @@
+p Attachments:
+ul
+  - attachable.attachments.each do |a|
+    li= link_to a.file.identifier, a.file.url
+    - if user_signed_in? && current_user.owner_of?(attachable)
+      .delete-file-link
+        = link_to 'Delete Attachment', attachment_path(a), method: :delete, remote: true

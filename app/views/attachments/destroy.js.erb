@@ -1,0 +1,2 @@
+$('.' + '<%= @attachment.attachable_type.downcase %>' + '-attachments').
+  html('<%= j render 'attachments/attachments', attachable: @attachment.attachable %>');
