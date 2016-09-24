@@ -5,7 +5,7 @@ div class="panel panel-default question"
   .panel-body
     p=  question.body
 
-    = render 'votes/buttons', votable: question
+    = render 'votes/question', votable: question
 
     - if current_user && current_user.owner_of?(question)
         p= link_to 'Delete question', question, method: :delete, remote: true 

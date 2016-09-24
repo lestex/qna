@@ -1,6 +1,7 @@
 - if answer.persisted?
   div class="answer-#{answer.id} #{'best-answer' if answer.best}"
     p=answer.body
+    = render 'votes/answer', votable: answer
     .answer-attachments
       = render 'attachments/attachments', attachable: answer
 

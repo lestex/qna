@@ -14,7 +14,7 @@ class User < ApplicationRecord
     !owner_of?(entity) && !voted?(entity)
   end
 
-  def can_reject_vote?(entity)
+  def can_cancel_vote?(entity)
     !owner_of?(entity) && voted?(entity)
   end
 
