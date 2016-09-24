@@ -10,19 +10,19 @@ class User < ApplicationRecord
     id == object.user_id
   end
 
-  def can_vote?(entity)
-    !owner_of?(entity) && !voted?(entity)
+  def can_vote?(object)
+    !owner_of?(object) && !voted?(object)
   end
 
-  def can_cancel_vote?(entity)
-    !owner_of?(entity) && voted?(entity)
+  def can_cancel_vote?(object)
+    !owner_of?(object) && voted?(object)
   end
 
-  def find_vote(entity)
-    entity.votes.where(user: self).first
+  def find_vote(object)
+    object.votes.where(user: self).first
   end
 
-  def voted?(entity)
-    !entity.votes.where(user: self).empty?
+  def voted?(object)
+    !object.votes.where(user: self).empty?
   end
 end

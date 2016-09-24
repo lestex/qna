@@ -1,4 +1,5 @@
 require 'rails_helper'
+require_relative 'concerns/voted'
 
 RSpec.describe AnswersController, type: :controller do
   let(:question) { create :question }
@@ -130,6 +131,11 @@ RSpec.describe AnswersController, type: :controller do
         answer.reload
         expect(answer.best).to eq false
       end
+    end
+
+    describe 'CONCERN actions' do
+      subject { create(:answer) }
+      it_behaves_like 'voted'
     end
   end
 end
