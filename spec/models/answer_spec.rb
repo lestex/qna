@@ -1,15 +1,14 @@
 require 'rails_helper'
+require_relative 'concerns/has_user'
+require_relative 'concerns/attachable'
+require_relative 'concerns/votable'
 
 RSpec.describe Answer, type: :model do
-  it { should belong_to :user }
   it { should belong_to :question }
-  it { should have_many :attachments }
-  it { should have_db_index :user_id }
-  it { should have_db_index :question_id }
   it { should validate_presence_of :body }
   it { should validate_presence_of :question_id }
-  it { should validate_presence_of :user_id }
-  it { should accept_nested_attributes_for :attachments }
+
+  it { should have_db_index :question_id }
 
   let(:question) { create(:question) }
   let!(:answer1) { create(:answer, question: question, best: false) }
@@ -31,4 +30,11 @@ RSpec.describe Answer, type: :model do
       expect(answer1).to_not be_best
     end
   end
+
+  context 'concern checks' do
+    it_behaves_like 'has_user'
+    it_behaves_like 'attachable'
+    it_behaves_like 'votable'
+  end
+
 end

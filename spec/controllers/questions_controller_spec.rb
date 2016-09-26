@@ -1,4 +1,5 @@
 require 'rails_helper'
+require_relative 'concerns/voted'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:question) { create(:question) }
@@ -182,5 +183,11 @@ RSpec.describe QuestionsController, type: :controller do
             .to redirect_to new_user_session_path
       end
     end
+
+    describe 'CONCERN actions' do
+      subject { create(:question) }
+      it_behaves_like 'voted'
+    end
+
   end
 end
