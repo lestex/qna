@@ -28,11 +28,9 @@ feature 'Vote for question' do
 
       expect(page).to_not have_selector(:link_or_button, 'Cancel Vote')
       click_on 'Vote+'
-      sleep(2)
       within '.vote-rating-question' do
         expect(page).to have_content '+1'
       end
-      save_and_open_page
       expect(page).to_not have_selector(:link_or_button, 'Vote+')
       expect(page).to_not have_selector(:link_or_button, 'Vote-')
       expect(page).to have_selector(:link_or_button, 'Cancel Vote')
@@ -43,7 +41,6 @@ feature 'Vote for question' do
       visit question_path(question)
 
       click_on 'Vote+'
-      save_and_open_page
       click_on 'Cancel Vote'
       click_on 'Vote-'
       within '.vote-rating-question' do

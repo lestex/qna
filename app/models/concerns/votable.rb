@@ -5,7 +5,7 @@ module Votable
   end
 
   def vote_rating
-    votes.sum(:count)
+    votes.sum(:value)
   end
 
   def build_vote(params)

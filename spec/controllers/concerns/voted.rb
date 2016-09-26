@@ -7,10 +7,10 @@ shared_examples_for 'voted' do
       before { sign_in(user) }
       it 'votes for the subject' do
         put :vote_up, params: { id: subject }, format: :json
-        expect(subject.votes.first.count).to be 1
+        expect(subject.votes.first.value).to be 1
       end
       it 'rejects the vote' do
-        subject.votes.create(count: 1, user: user)
+        subject.votes.create(value: 1, user: user)
         expect { put :vote_cancel, params: { id: subject }, format: :json }.to change(subject.votes, :count).by(-1)
       end
     end

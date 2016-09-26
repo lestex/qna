@@ -36,7 +36,7 @@ module Voted
 
   def vote(num)
     unless current_user.owner_of?(@votable)
-      @vote = @votable.build_vote(count: num, user: current_user)
+      @vote = @votable.build_vote(value: num, user: current_user)
       respond_to do |format|
         if @vote.save
           format.json { render json: { rating: format_likes(@votable.vote_rating), id: @votable.id } }
