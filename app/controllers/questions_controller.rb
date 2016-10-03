@@ -10,7 +10,9 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = @question.answers.build
+    @comment = @question.comments.build
     @answer.attachments.build
+    @answer.comments.build
   end
 
   def new
