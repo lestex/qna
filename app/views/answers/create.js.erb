@@ -4,6 +4,8 @@
   <% end %>
 <% else %>
   $('.answer-message').html('Your answer created successfully.')
-  $('.answers').append('<%= j render @answer %>')
-  $('#answer_body').val('');
+  <% publish_to "/questions/#{@question.id}/answers" do %>
+    $('.answers').append("<%=  j render(@answer) %>");
+  <% end %>  
+  $('.new_answer #answer_body').val('');
 <% end %>
