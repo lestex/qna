@@ -4,10 +4,10 @@ div class="vote-rating-answer-#{votable.id}"
     = format_likes(votable.vote_rating)
 - if user_signed_in?
   div class="voting-choice-answer-#{votable.id}" style=(current_user.can_vote?(votable) ? 'display: inline-block;' : 'display: none;' )
-    p= button_to 'Vote+', vote_up_answer_path(votable), method: :put, remote: true, data: { type: :json }, class: 'btn btn-success', form_class: 'vote-answer'
+    p= button_to 'Vote+', vote_up_answer_path(votable), method: :put, remote: true, form: { "data-type" => "json" }, class: 'btn btn-success', form_class: 'vote-answer'
 
   div class="voting-choice-answer-#{votable.id}" style=(current_user.can_vote?(votable) ? 'display: inline-block;' : 'display: none;' )
-    p= button_to 'Vote-', vote_down_answer_path(votable), method: :put, remote: true, data: { type: :json }, class: 'btn btn-warning', form_class: 'vote-answer'
+    p= button_to 'Vote-', vote_down_answer_path(votable), method: :put, remote: true, form: { "data-type" => "json" }, class: 'btn btn-warning', form_class: 'vote-answer'
 
   div class="voting-reject-answer-#{votable.id}" style=('display: none;' unless current_user.can_cancel_vote?(votable))
-    p= button_to 'Cancel Vote', vote_cancel_answer_path(votable), method: :put, remote: true, data: { type: :json }, class: 'btn btn-danger', form_class: 'vote-cancel-answer'
+    p= button_to 'Cancel Vote', vote_cancel_answer_path(votable), method: :put, remote: true, form: { "data-type" => "json" }, class: 'btn btn-danger', form_class: 'vote-cancel-answer'

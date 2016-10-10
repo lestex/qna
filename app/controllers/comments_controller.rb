@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_commentable, only: :create
+  before_action :load_commentable, only: :create
   after_action :publish_to, only: :create
 
   respond_to :json
@@ -15,7 +15,7 @@ class CommentsController < ApplicationController
     params.require(:comment).permit(:body)
   end
 
-  def set_commentable
+  def load_commentable
     commentable_id = params.keys.detect { |k| k.to_s =~ /(question|answer)_id/ } 
     klass = $1.classify.constantize
     @commentable = klass.find(params[commentable_id]) 

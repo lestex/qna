@@ -29,7 +29,7 @@ class QuestionsController < ApplicationController
   def update
     if current_user.owner_of?(@question)
       @question.update(question_params)
-      respond_with @question
+      respond_with(@question)
     end
   end
 
