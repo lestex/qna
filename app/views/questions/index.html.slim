@@ -1,5 +1,7 @@
 h1 Questions
+.questions
 - if @questions
   - @questions.each do |question|
     p= link_to question.title, question
-  
+
+= subscribe_to "/questions"

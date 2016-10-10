@@ -30,6 +30,14 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:answer).attachments.first).to be_a_new(Attachment)
     end
 
+    it 'creates a new comment for the @question' do
+      expect(assigns(:question).comments.first).to be_a_new(Comment)
+    end
+    
+    it 'creates a new comment for the @answer' do
+      expect(assigns(:answer).comments.first).to be_a_new(Comment)
+    end
+
     it 'renders show view' do
       expect(response).to render_template :show
     end

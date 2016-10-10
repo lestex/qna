@@ -4,6 +4,10 @@ ready = ->
     $(this).hide();
     answer_id = $(this).data('answerId')
     $('form#edit-answer-' + answer_id).show()
+  $('.comment-answer-link').click (e) ->
+    e.preventDefault();
+    $(this).hide();
+    $('form#comment-answer-form').show()
 
 vote_for_answer = ->
   $('.vote-answer').bind 'ajax:success', (e, data, status, xhr) ->
@@ -32,6 +36,12 @@ vote_cancel_for_answer = ->
     errors = $.parseJSON(xhr.responseText)
     $.each errors, (index, value) ->
       $('.vote-message-answer-' + vote.id).html(value)
+
+comment_answer = ->
+  $('form#comment-answer-form').bind 'ajax:error', (e, xhr, status, error) ->
+    errors = $.parseJSON(xhr.responseText)
+    $.each errors, (index, value) ->
+      $('.comment-message').html(value)
 
 $(document).ready(ready)
 $(document).on("turbolinks:load", ready)
