@@ -18,12 +18,11 @@ feature 'Add comment to question' do
     end
 
     scenario 'adds an empty comment', js: true do
-      #within '.question-comments' do
+      within '.question-comments' do
         click_on 'Add comment'
         click_on 'Save'
-        save_and_open_page
         expect(page).to have_content "Body can't be blank"
-      #end
+      end
     end
   end
 
