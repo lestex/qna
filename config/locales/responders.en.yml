@@ -15,4 +15,4 @@ en:
         notice: 'Your question created successfully.'
         alert: 'Could not create a question.'
       destroy:
-        notice: 'Question removed successfully.'
+        notice: 'Question deleted successfully.'
