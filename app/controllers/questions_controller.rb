@@ -34,7 +34,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    respond_with(@question.destroy!, location: root_path) if current_user.owner_of?(@question)
+    respond_with(@question.destroy!) if current_user.owner_of?(@question)
   end
 
   private
