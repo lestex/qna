@@ -22,6 +22,7 @@ gem 'cocoon'
 gem 'private_pub'
 gem 'thin'
 gem 'foreman'
+gem 'responders', '~> 2.0'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

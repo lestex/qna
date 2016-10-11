@@ -24,7 +24,7 @@ feature 'Ask a question' do
       fill_in 'Title', with: 'Question title'
       click_button 'Create question'
       
-      expect(page).to have_content "can't be blank"      
+      expect(page).to have_content 'Could not create a question.'
     end
   end
 

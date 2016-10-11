@@ -39,9 +39,9 @@ vote_cancel_for_answer = ->
 
 comment_answer = ->
   $('form#comment-answer-form').bind 'ajax:error', (e, xhr, status, error) ->
-    errors = $.parseJSON(xhr.responseText)
-    $.each errors, (index, value) ->
-      $('.comment-message').html(value)
+    errors = xhr.responseJSON.errors
+    $.each errors.body, (index, value) ->
+      $('.comment-message').html('Body ' + value)
 
 $(document).ready(ready)
 $(document).on("turbolinks:load", ready)

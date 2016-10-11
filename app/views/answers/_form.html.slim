@@ -5,6 +5,6 @@
       .answer-message
       = f.text_area :body, class: 'form-control'    
     .form-group
-      = render 'attachments/form', f: f
+      = render 'attachments/form', f: f, attachable: @answer
     .form-group
       = f.submit 'Answer a question', class: 'btn btn-primary'

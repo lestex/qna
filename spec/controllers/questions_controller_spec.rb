@@ -26,18 +26,6 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:question)).to eq question_with_answers      
     end
 
-    it 'assigns a new attachment for an @answer' do
-      expect(assigns(:answer).attachments.first).to be_a_new(Attachment)
-    end
-
-    it 'creates a new comment for the @question' do
-      expect(assigns(:question).comments.first).to be_a_new(Comment)
-    end
-    
-    it 'creates a new comment for the @answer' do
-      expect(assigns(:answer).comments.first).to be_a_new(Comment)
-    end
-
     it 'renders show view' do
       expect(response).to render_template :show
     end
@@ -54,10 +42,6 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'assigns a new Question to @question' do
         expect(assigns(:question)).to be_a_new(Question)
-      end
-
-      it 'build a new Attachment for @question' do
-        expect(assigns(:question).attachments.first).to be_a_new(Attachment)
       end
 
       it 'renders new view' do
@@ -102,7 +86,7 @@ RSpec.describe QuestionsController, type: :controller do
         it 'redirects to show view' do
           post :create, params: {question: attributes_for(:question)}
           expect(response).to redirect_to assigns(:question)
-          expect(flash[:success]).to match 'question created successfully'          
+          expect(flash[:notice]).to match 'Your question created successfully.'          
         end
       end
 
@@ -169,7 +153,7 @@ RSpec.describe QuestionsController, type: :controller do
         
         it 'redirects to show view' do
           delete :destroy, params: { id: question}
-          expect(response).to redirect_to assigns(:question)
+          expect(response).to redirect_to questions_path
         end
       end
     end

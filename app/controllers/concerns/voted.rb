@@ -4,6 +4,9 @@ module Voted
 
   included do
     before_action :load_votable, only: [:vote_up, :vote_down, :vote_cancel]
+    before_action :find_vote, only: :reject_vote
+
+    respond_to :json, only: [:vote_up, :vote_down, :vote_cancel]
   end
 
   def vote_up
@@ -15,37 +18,23 @@ module Voted
   end
 
   def vote_cancel
-    @vote = current_user.find_vote(@votable)
-    if @vote
-      respond_to do |format|
-        if @vote.destroy
-          format.json { render json: { rating: format_likes(@votable.vote_rating), id: @votable.id } }
-        else
-          format.json do
-            render json: @vote.errors.full_messages, status: :unprocessable_entity
-          end
-        end
-      end
-    end
+    respond_with(@vote.destroy) do |format|
+      format.json { render json: { rating: format_likes(@votable.vote_rating), id: @votable.id } }
+    end if @vote
   end
 
   private
-   def load_votable
-     @votable = params[:controller].classify.constantize.find(params[:id])
-   end
+  def load_votable
+    @votable = params[:controller].classify.constantize.find(params[:id])
+  end
+
+  def find_vote
+    @vote = current_user.find_vote(@votable)
+  end
 
   def vote(num)
-    unless current_user.owner_of?(@votable)
-      @vote = @votable.build_vote(value: num, user: current_user)
-      respond_to do |format|
-        if @vote.save
-          format.json { render json: { rating: format_likes(@votable.vote_rating), id: @votable.id } }
-        else
-          format.json do
-            render json: @vote.errors.full_messages, status: :unprocessable_entity
-          end
-        end
-      end
-    end
+    respond_with(@vote = @votable.votes.create(value: num, user: current_user)) do |format|
+      format.json { render json: { rating: format_likes(@votable.vote_rating), id: @votable.id } }
+    end unless current_user.owner_of?(@votable)
   end
 end
