@@ -23,6 +23,10 @@ gem 'private_pub'
 gem 'thin'
 gem 'foreman'
 gem 'responders', '~> 2.0'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
