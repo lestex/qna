@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable,
-         :validatable, :omniauthable, omniauth_providers: [:facebook] 
+         :validatable, :omniauthable, omniauth_providers: [:facebook, :twitter]
 
   def owner_of?(object)
     id == object.user_id
@@ -33,6 +33,10 @@ class User < ApplicationRecord
     return authorization.user if authorization
 
     email = auth.info[:email]
+    unless email
+      email = Devise.friendly_token[0, 20] + '@example.com'
+    end
+    
     user = User.where(email: email).first
     unless user
       password = Devise.friendly_token[0, 20]

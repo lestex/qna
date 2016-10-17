@@ -3,7 +3,7 @@ require_relative '../features_helper'
 feature 'Signing in with Facebook' do
   given(:user) { create(:user) }
 
-  describe 'facebook sign in' do
+  describe 'Registered user tries to sign in' do
     before(:each) { OmniAuth.config.mock_auth[:facebook] = nil }
     scenario 'Registered user tries to sign in' do
       visit new_user_session_path
@@ -23,7 +23,7 @@ feature 'Signing in with Facebook' do
       expect(current_path).to eq root_path
     end
 
-    scenario 'Authenticated user tries to log out' do
+    scenario 'Logged in user tries to log out' do
       visit new_user_session_path
       OmniAuth.config.add_mock(:facebook, {info: { email: user.email }})
       click_on 'Sign in with Facebook'
