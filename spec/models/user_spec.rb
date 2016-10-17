@@ -12,7 +12,7 @@ RSpec.describe User, type: :model do
   let(:user) { create(:user) }
   let(:question) { create(:question) }
   
-  describe '.owner_of?(resource)' do
+  describe '#owner_of?(resource)' do
     it 'returns true if resource.user_id == self.id' do
       expect(question.user).to be_owner_of(question)
     end
@@ -22,7 +22,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '.can_vote?' do
+  describe '#can_vote?' do
     it 'returns true if can vote for a question' do
       expect(user).to be_can_vote(question)
     end
@@ -36,7 +36,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '.can_cancel_vote?' do
+  describe '#can_cancel_vote?' do
     it 'cannot reject a vote which is not voted by the user' do
       expect(user).to_not be_can_cancel_vote(question)
     end
@@ -46,7 +46,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '.find_vote' do
+  describe '#find_vote' do
     it 'finds a vote for the question' do
       vote = question.votes.create(value: 1, user: question.user)
       expect(vote.id).to be question.user.find_vote(question).id
@@ -56,7 +56,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '.voted?' do
+  describe '#voted?' do
     it 'checks the question was voted by another user' do
       question.votes.create(value: 1, user: user)
       expect(question.user).to_not be_voted(question)
@@ -122,6 +122,15 @@ RSpec.describe User, type: :model do
           expect(authorization.uid).to eq auth.uid
         end
       end
+    end
+  end
+
+  describe '.build_with_email' do
+    it 'creates new user' do
+      params = { user: { email: 'test@example.com' } }
+      auth = { 'provider' => 'twitter', 'uid' => 123456,
+               'user_password' => '123456' }
+      expect { User.build_with_email(params, auth) }.to change(User, :count).by(1)
     end
   end
 end

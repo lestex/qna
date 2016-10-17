@@ -1,4 +1,4 @@
-class UsersController < DeviseController
+class UsersController < ApplicationController
   def set_email
     auth = session['omniauth.user_hash']
     @user = User.build_with_email(params, auth)

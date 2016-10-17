@@ -11,6 +11,10 @@ feature 'Signing in with Twitter' do
       OmniAuth.config.add_mock(:twitter)
       click_on 'Sign in with Twitter'
 
+      expect(page).to have_content 'Please enter your email'
+      fill_in 'Email', with: user.email
+      click_on 'Continue'
+
       expect(page).to have_content 'Successfully authenticated from Twitter account.'
       expect(current_path).to eq root_path
     end
@@ -20,14 +24,23 @@ feature 'Signing in with Twitter' do
       OmniAuth.config.add_mock(:twitter)
       click_on 'Sign in with Twitter'
 
+      expect(page).to have_content 'Please enter your email'
+      fill_in 'Email', with: user.email
+      click_on 'Continue'
+
       expect(page).to have_content 'Successfully authenticated from Twitter account.'
       expect(current_path).to eq root_path
     end
 
     scenario 'Authenticated user tries to log out' do
-      OmniAuth.config.add_mock(:twitter)
       visit new_user_session_path
+      OmniAuth.config.add_mock(:twitter)
       click_on 'Sign in with Twitter'
+
+      expect(page).to have_content 'Please enter your email'
+      fill_in 'Email', with: user.email
+      click_on 'Continue'
+
       click_on 'Sign out'
 
       expect(page).to have_content 'Signed out successfully.'
