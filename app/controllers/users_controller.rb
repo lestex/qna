@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def set_email
-    auth = session['omniauth.user_hash']
+    auth = session['devise.user_hash']
     @user = User.build_with_email(params, auth)
     if @user.persisted?
       sign_in_and_redirect @user, event: :authentication

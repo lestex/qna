@@ -10,13 +10,13 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   private
   def authenticate_with_provider
     auth = request.env['omniauth.auth']
-  	@user = User.find_for_oauth(auth)
+    @user = User.find_for_oauth(auth)
     if @user.persisted?
       sign_in_and_redirect @user, event: :authentication
       set_flash_message(:notice, :success, kind: auth.provider.capitalize) if is_navigational_format?
     elsif @user.email.blank?
-      data_hash = { provider: auth.provider, uid: auth.uid.to_s, user_password: @user.password }
-      session['omniauth.user_hash'] = data_hash
+      data_hash = { provider: auth.provider, uid: auth.uid.to_s }
+      session['devise.user_hash'] = data_hash
       render 'users/set_email'
     end
   end

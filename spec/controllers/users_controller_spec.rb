@@ -4,7 +4,7 @@ RSpec.describe UsersController, type: :controller do
 
   describe "POST #set_email" do
     it "creates a user from params" do
-      session['omniauth.user_hash'] = {
+      session['devise.user_hash'] = {
               'provider' => 'facebook', 'uid' => 123456,
               'user_password' => '123456'
               }

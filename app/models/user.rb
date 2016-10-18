@@ -34,8 +34,7 @@ class User < ApplicationRecord
 
     email = auth.info[:email]
     unless email
-      password = Devise.friendly_token[0, 20]
-      return User.new(email: '', password: password, password_confirmation: password)
+      return User.new
     end
     
     user = User.where(email: email).first
@@ -48,10 +47,11 @@ class User < ApplicationRecord
   end
 
   def self.build_with_email(params, auth)
+    password = Devise.friendly_token[0, 20]
     user = User.where(email: params[:user][:email]).first
-    user = User.create!(email: params[:user][:email],
-    password: auth["user_password"],
-    password_confirmation: auth["user_password"]) unless user
+    user ||= User.create!(email: params[:user][:email], 
+      password: password,
+      password_confirmation: password)
     user.authorizations.create(provider: auth["provider"], uid: auth["uid"].to_s)
     user
   end
