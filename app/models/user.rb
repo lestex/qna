@@ -33,9 +33,7 @@ class User < ApplicationRecord
     return authorization.user if authorization
 
     email = auth.info[:email]
-    unless email
-      return User.new
-    end
+    return User.new unless email
     
     user = User.where(email: email).first
     unless user
