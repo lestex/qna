@@ -23,6 +23,10 @@ gem 'private_pub'
 gem 'thin'
 gem 'foreman'
 gem 'responders', '~> 2.0'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -36,6 +40,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'capybara'
   gem 'capybara-webkit'
+  gem 'letter_opener'
 end
 
 group :development do
@@ -48,6 +53,7 @@ end
 group :test do
   gem 'shoulda-matchers'
   gem 'launchy'
+  gem 'capybara-email'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
