@@ -26,7 +26,7 @@ gem 'responders', '~> 2.0'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
-
+gem 'cancancan', '~> 1.10'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
