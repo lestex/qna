@@ -6,24 +6,24 @@ class AnswersController < ApplicationController
   include Voted
   respond_to :js
 
+  authorize_resource
+
   def create
     respond_with(@answer = @question.answers.create(answer_params.merge(user: current_user)))
   end
 
   def update
-    if current_user.owner_of?(@answer)
-      @answer.update(answer_params)
-      respond_with(@answer)
-    end
+    @answer.update(answer_params)
+    respond_with(@answer)
   end
 
   def destroy
-    respond_with(@answer.destroy!) if current_user.owner_of?(@answer)
+    respond_with(@answer.destroy!)
   end
 
   def mark_best
     @question = @answer.question
-    respond_with(@answer.mark_best) if current_user.owner_of?(@question)
+    respond_with(@answer.mark_best)
   end
 
   private
