@@ -13,10 +13,8 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if current_user.owner_of?(@answer)
-      @answer.update(answer_params)
-      respond_with(@answer)
-    end
+    @answer.update(answer_params)
+    respond_with(@answer)
   end
 
   def destroy
