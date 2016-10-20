@@ -59,7 +59,7 @@ RSpec.describe AnswersController, type: :controller do
         end
 
         it 'renders destroy template' do
-          expect( delete :destroy, params: { question_id: question.id, id: answer.id }, format: :js ).to render_template :destroy
+          expect( delete :destroy, params: { question_id: question.id, id: answer.id }, format: :js ).to render_template 'application/denied'
         end
       end
       context "he doesn't own" do

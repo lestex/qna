@@ -50,17 +50,21 @@ RSpec.describe Ability do
       it { should_not be_able_to :mark_best, create(:answer, user: other_user) }
     end
 
-    %i(vote_up vote_down vote_cancel).each do |action_performed| 
+    %i(vote_up vote_down).each do |action_performed| 
       context "can #{action_performed} against other users" do 
-        it { should be_able_to action_performed, create(:question, user: other_user), user: user } 
-        it { should be_able_to action_performed, create(:answer, user: other_user), user: user } 
+        it { should be_able_to action_performed, create(:question, user: other_user), user: user }
+        it { should be_able_to action_performed, create(:answer, user: other_user), user: user }
       end 
 
       context "cannot #{action_performed} against self" do 
-        it { should_not be_able_to action_performed, create(:question, user: user), user: user } 
-        it { should_not be_able_to action_performed, create(:answer, user: user), user: user } 
+        it { should_not be_able_to action_performed, create(:question, user: user), user: user }
+        it { should_not be_able_to action_performed, create(:answer, user: user), user: user }
       end 
     end
 
+    context 'can vote_cancel' do
+      it { should be_able_to :vote_cancel, create(:question, user: user), user: user }
+      it { should be_able_to :vote_cancel, create(:answer, user: user), user: user }
+    end
   end
 end

@@ -8,6 +8,10 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |format|
+      format.js do
+        flash.now[:error] = exception.message
+        render 'denied',  status: :forbidden
+      end
       format.json { render json: { errors: [exception.message] }, status: :forbidden }
       format.html { redirect_to root_url, alert: exception.message }
     end

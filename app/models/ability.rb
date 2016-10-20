@@ -33,8 +33,11 @@ class Ability
     can :mark_best, Answer do |subject|
       user.owner_of?(subject.question)
     end
-    can [:vote_up, :vote_down, :vote_cancel], [Question, Answer] do |subject|
+    can [:vote_up, :vote_down], [Question, Answer] do |subject|
       !user.owner_of?(subject)
+    end
+    can [:vote_cancel], [Question, Answer] do |subject|
+      user.owner_of?(subject)
     end
   end
 end

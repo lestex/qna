@@ -1,6 +1,7 @@
 p Comments:
 div class=("comments-#{commentable.class.to_s.downcase}-#{commentable.id}")
   = render 'comments/comments_list', commentable: commentable
+  
 - if can?(:create, Comment)
   p= link_to 'Add comment', '', class: "comment-#{commentable.class.to_s.downcase}-link"
   = form_for [commentable, commentable.comments.build], remote: true, data: { type: :json }, html: { style: 'display: none', id: "comment-#{commentable.class.to_s.downcase}-form" } do |f|
