@@ -7,6 +7,8 @@ module Voted
     before_action :find_vote, only: :reject_vote
 
     respond_to :json, only: [:vote_up, :vote_down, :vote_cancel]
+
+    authorize_resource
   end
 
   def vote_up

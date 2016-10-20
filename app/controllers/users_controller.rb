@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  authorize_resource
+  
   def set_email
     auth = session['devise.user_hash']
     @user = User.build_with_email(params, auth)

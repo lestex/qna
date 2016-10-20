@@ -15,8 +15,8 @@ class Ability
 
   def guest_abilities
     can :read, :all
+    can :set_email, User
   end
-
 
   def admin_abilities
     can :manage, :all
@@ -26,5 +26,15 @@ class Ability
   def user_abilities
     guest_abilities
     can :create, [Question, Answer, Comment]
+    can [:update, :destroy], [Question, Answer], user: user
+    can :destroy, Attachment do |attachment|
+      user.owner_of?(attachment.attachable)
+    end
+    can :mark_best, Answer do |subject|
+      user.owner_of?(subject.question)
+    end
+    can [:vote_up, :vote_down, :vote_cancel], [Question, Answer] do |subject|
+      !user.owner_of?(subject)
+    end
   end
 end
