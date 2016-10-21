@@ -61,6 +61,10 @@ describe 'profile API' do
         expect(response.body).to be_json_eql(users.to_json)
       end
 
+      it 'doesn\t contain current user' do
+        expect(response.body).to_not include_json(me.to_json)
+      end
+
       %w(email id created_at updated_at admin).each do |attr|
         it "contains the #{attr}" do
           JSON.parse(response.body).each_with_index do |response_user, index|
