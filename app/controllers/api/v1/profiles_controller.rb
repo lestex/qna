@@ -3,8 +3,13 @@ class Api::V1::ProfilesController < ApplicationController
   skip_authorization_check
 
   respond_to :json
+  
   def me
     respond_with current_resource_owner
+  end
+
+  def index
+    respond_with User.all_except(current_resource_owner)
   end
 
   protected

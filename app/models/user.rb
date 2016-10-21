@@ -8,6 +8,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable,
          :validatable, :omniauthable, omniauth_providers: [:facebook, :twitter]
 
+  scope :all_except, ->(user) { where.not(id: user) }
+
   def owner_of?(object)
     id == object.user_id
   end
