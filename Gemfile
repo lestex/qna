@@ -27,6 +27,7 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'cancancan', '~> 1.10'
+gem 'doorkeeper'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -54,6 +55,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'launchy'
   gem 'capybara-email'
+  gem 'json_spec'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
