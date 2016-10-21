@@ -67,9 +67,8 @@ describe 'profile API' do
 
       %w(email id created_at updated_at admin).each do |attr|
         it "contains the #{attr}" do
-          JSON.parse(response.body).each_with_index do |response_user, index|
-            expect(response_user.to_json).to be_json_eql(users[index].send(attr.to_sym).to_json).at_path(attr)
-          end
+          user = users.first
+          expect(response.body).to be_json_eql(user.send(attr.to_sym).to_json).at_path("0/#{attr}")          
         end
       end
 
