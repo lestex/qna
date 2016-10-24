@@ -18,4 +18,8 @@ class ApplicationController < ActionController::Base
   end
 
   check_authorization unless: :devise_controller?
+  def current_user
+    return @current_resource_owner ||= User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
+    @current_user ||= warden.authenticate(scope: :user)
+  end
 end

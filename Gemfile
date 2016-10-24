@@ -9,10 +9,6 @@ gem 'coffee-rails', '~> 4.2'
 gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 3.0'
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
 gem 'devise', '~> 4.2.0'
 gem 'bootstrap-sass'
 gem 'slim-rails'
@@ -28,8 +24,7 @@ gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'cancancan', '~> 1.10'
 gem 'doorkeeper'
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
+gem 'active_model_serializers'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -49,6 +44,7 @@ group :development do
   gem 'listen', '~> 3.0.5'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  # gem 'capistrano-rails', group: :development
 end
 
 group :test do

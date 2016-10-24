@@ -39,5 +39,6 @@ class Ability
     can [:vote_cancel], [Question, Answer] do |subject|
       user.owner_of?(subject)
     end
+    can [:read_self, :read_all], :profile
   end
 end

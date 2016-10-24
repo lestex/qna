@@ -74,8 +74,7 @@ describe 'profile API' do
 
       %w(password encrypted_password).each do |attr|
         it "does not contain the #{attr}" do
-          user = users.first
-          expect(response.body).to_not be_json_eql(user.send(attr.to_sym).to_json).at_path("0/#{attr}")          
+          expect(response.body).to_not have_json_path(attr)          
         end
       end
     end
