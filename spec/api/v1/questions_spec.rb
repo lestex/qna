@@ -2,16 +2,8 @@ require 'rails_helper'
 
 describe 'Question API' do
   describe 'GET /index' do
-    context 'unauthorized' do
-      it 'returns 401 status if no access_token' do
-        get '/api/v1/questions', params: { format: :json }
-        expect(response.status).to eq 401
-      end
-      it 'returns 401 status if no access_token' do
-        get '/api/v1/questions', params: { format: :json, access_token: '123456' }
-        expect(response.status).to eq 401
-      end
-    end
+    let(:api_path) { '/api/v1/questions' }
+    it_behaves_like 'API authorizable'
 
     context 'authorized' do
       let(:access_token) { create(:access_token) }
@@ -38,17 +30,8 @@ describe 'Question API' do
 
   describe 'GET /show' do
     let(:question) { create(:question) }
-
-    context 'unauthorized' do
-      it 'returns 401 status if no access_token' do
-        get "/api/v1/questions/#{question.id}", params: { format: :json }
-        expect(response.status).to eq 401
-      end
-      it 'returns 401 status if no access_token' do
-        get "/api/v1/questions/#{question.id}", params: { format: :json, access_token: '123456' }
-        expect(response.status).to eq 401
-      end
-    end
+    let(:api_path) { "/api/v1/questions/#{question.id}" }
+    it_behaves_like 'API authorizable'
 
     context 'authorized' do
       let(:access_token) { create(:access_token) }
@@ -134,5 +117,8 @@ describe 'Question API' do
         end
       end
     end
+  end
+  def do_request(params = {})
+    get api_path, params: { format: :json }.merge(params)
   end
 end
