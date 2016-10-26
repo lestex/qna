@@ -2,16 +2,8 @@ require 'rails_helper'
 
 describe 'Question API' do
   describe 'GET /index' do
-    context 'unauthorized' do
-      it 'returns 401 status if no access_token' do
-        get '/api/v1/questions', params: { format: :json }
-        expect(response.status).to eq 401
-      end
-      it 'returns 401 status if no access_token' do
-        get '/api/v1/questions', params: { format: :json, access_token: '123456' }
-        expect(response.status).to eq 401
-      end
-    end
+    let(:api_path) { '/api/v1/questions' }
+    it_behaves_like 'API authorizable'
 
     context 'authorized' do
       let(:access_token) { create(:access_token) }
@@ -38,17 +30,8 @@ describe 'Question API' do
 
   describe 'GET /show' do
     let(:question) { create(:question) }
-
-    context 'unauthorized' do
-      it 'returns 401 status if no access_token' do
-        get "/api/v1/questions/#{question.id}", params: { format: :json }
-        expect(response.status).to eq 401
-      end
-      it 'returns 401 status if no access_token' do
-        get "/api/v1/questions/#{question.id}", params: { format: :json, access_token: '123456' }
-        expect(response.status).to eq 401
-      end
-    end
+    let(:api_path) { "/api/v1/questions/#{question.id}" }
+    it_behaves_like 'API authorizable'
 
     context 'authorized' do
       let(:access_token) { create(:access_token) }
@@ -66,33 +49,9 @@ describe 'Question API' do
         end
       end
 
-      context 'comments' do
-        it 'included in the question' do
-          expect(response.body).to have_json_path('comments')
-        end
-
-        %w(id body created_at updated_at).each do |attr|
-          it "contains the #{attr}" do
-            expect(response.body).to be_json_eql(comment.send(attr.to_sym).to_json).at_path("comments/0/#{attr}")
-          end
-        end
-      end
-
-      context 'attachments' do
-        it 'included in the question' do
-          expect(response.body).to have_json_size(1).at_path('attachments')
-        end
-
-        it 'includes the url' do
-          expect(response.body).to include_json((Rails.application.config.hostname_url + attachment.file.url).to_json).at_path('attachments/0/file_url')
-        end
-
-        %w(id created_at updated_at).each do |attr|
-          it "contains the #{attr}" do
-            expect(response.body).to be_json_eql(attachment.send(attr.to_sym).to_json).at_path("attachments/0/#{attr}")
-          end
-        end
-      end
+      it_behaves_like 'API commentable'
+      it_behaves_like 'API attachable'
+      
     end
   end
   
@@ -134,5 +93,8 @@ describe 'Question API' do
         end
       end
     end
+  end
+  def do_request(params = {})
+    get api_path, params: { format: :json }.merge(params)
   end
 end
