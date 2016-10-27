@@ -25,6 +25,8 @@ gem 'omniauth-twitter'
 gem 'cancancan', '~> 1.10'
 gem 'doorkeeper'
 gem 'active_model_serializers'
+gem 'sidekiq'
+gem 'whenever'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
