@@ -21,7 +21,7 @@ RSpec.describe Answer, type: :model do
     end
   end
 
-  context '.mark_best' do    
+  describe '.mark_best' do    
     it 'sets answer.best to true' do
       answer1.mark_best
       expect(answer1).to be_best
@@ -31,6 +31,13 @@ RSpec.describe Answer, type: :model do
       expect(answer1).to_not be_best
     end
   end
+
+  # describe '.notify_author' do
+  #   it 'sends an email to the question author' do
+  #     expect(AnswerMailer).to receive(:digest).with(question.user).and_call_original
+  #     create(:answer, question: question)
+  #   end
+  # end
 
   context 'concern checks' do
     it_behaves_like 'has_user'
