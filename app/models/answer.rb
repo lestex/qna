@@ -22,6 +22,6 @@ class Answer < ApplicationRecord
 
   private
   def notify_author
-    AnswerMailer.delay.digest(self.question.user, self.question)
+    AnswerMailer.digest(self.question.user, self.question).deliver_later
   end
 end

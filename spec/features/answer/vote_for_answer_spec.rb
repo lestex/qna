@@ -1,4 +1,4 @@
-require_relative '../features_helper.rb'
+require_relative '../features_helper'
 
 feature 'Vote for answer' do
   given(:user) { create(:user) }
