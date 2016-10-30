@@ -1,8 +1,8 @@
 require_relative '../features_helper'
 
 feature 'Vote for question' do
-  given(:user) { create(:user) }
-  given(:question) { create(:question) }
+  let(:user) { create(:user) }
+  let(:question) { create(:question) }
 
   scenario 'Unauthenticated user cannot vote', js: true  do
     visit question_path(question)

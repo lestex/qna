@@ -1,8 +1,8 @@
 require_relative '../features_helper'
 
 feature 'Mark best answer' do
-  given(:user) { create(:user) }
-  given(:question) { create(:question) }
+  let(:user) { create(:user) }
+  let(:question) { create(:question) }
   before { create_list(:answer, 3, question: question, user: question.user) }
 
   context 'Authenticated user' do

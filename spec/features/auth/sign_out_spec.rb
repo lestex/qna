@@ -1,7 +1,7 @@
 require_relative '../features_helper'
 
 feature 'Sign out' do
-  given(:user) { create(:user) }
+  let(:user) { create(:user) }
   context 'when signed in' do
     scenario 'user can sign out' do
       log_in_user(user)

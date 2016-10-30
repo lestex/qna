@@ -1,9 +1,9 @@
 require_relative '../features_helper'
 
 feature 'Add files to question' do
-  given!(:user) { create(:user) }
-  given!(:question) { create(:question) }
-  given!(:attachment) { create(:attachment, attachable: question) }
+  let!(:user) { create(:user) }
+  let!(:question) { create(:question) }
+  let!(:attachment) { create(:attachment, attachable: question) }
 
   scenario 'adds more attachments when asks a question', js: true do
     log_in_user(user)

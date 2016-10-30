@@ -9,6 +9,8 @@ class Answer < ApplicationRecord
   validates :body, :question_id, presence: true
 
   default_scope { order(best: :desc, created_at: :asc )}
+
+  after_create :notify_author
   
   def mark_best
     transaction do
@@ -16,5 +18,10 @@ class Answer < ApplicationRecord
       raise ActiveRecord::Rollback unless updated_count == question.answers.count
       update!(best: true)
     end
+  end
+
+  private
+  def notify_author
+    AnswerMailer.digest(self.question.user, self.question).deliver_later
   end
 end

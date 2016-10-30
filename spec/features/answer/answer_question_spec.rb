@@ -2,8 +2,8 @@ require_relative '../features_helper'
 
 feature 'Answer a question' do
 
-  given(:user) {create(:user)}
-  given!(:question) {create(:question)}
+  let(:user) {create(:user)}
+  let!(:question) {create(:question)}
 
   context 'authenticated user' do
     before {log_in_user(user)}
