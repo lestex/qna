@@ -1,0 +1,10 @@
+<% if @subscription.errors.present? %>
+  <% @subscription.errors.full_messages.each do |message| %>
+    $('.alert').html('<%= j message %>')
+  <% end %>
+<% else %>
+  $('.notice').html('You subscribed to this question!')
+  $('.subscribe_question').hide()
+  $('.destroy_form').replaceWith("<%= j render 'subscriptions/destroy_form', question: @subscription.question %>")
+<% end %>
+View 

@@ -56,6 +56,10 @@ class User < ApplicationRecord
     user
   end
 
+  def subscribed?(object)
+    object.subscriptions.where(user_id: id).present?
+  end
+
   def self.send_questions
     self.send_daily_digest
   end

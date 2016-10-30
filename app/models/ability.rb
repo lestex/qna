@@ -25,20 +25,28 @@ class Ability
 
   def user_abilities
     guest_abilities
-    can :create, [Question, Answer, Comment]
+    can :create, [Question, Answer, Comment, Subscription]
     can [:update, :destroy], [Question, Answer], user: user
     can :destroy, Attachment do |attachment|
       user.owner_of?(attachment.attachable)
     end
+
+    can :destroy, Subscription do |subscription|
+      user.subscribed?(subscription.question)
+    end
+
     can :mark_best, Answer do |subject|
       user.owner_of?(subject.question)
     end
+
     can [:vote_up, :vote_down], [Question, Answer] do |subject|
       !user.owner_of?(subject)
     end
+
     can [:vote_cancel], [Question, Answer] do |subject|
       user.owner_of?(subject)
     end
+    
     can [:read_self, :read_all], :profile
   end
 end

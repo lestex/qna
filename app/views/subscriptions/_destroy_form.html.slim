@@ -1,0 +1,2 @@
+div class='unsubscribe_question' style=('display: none;' unless current_user.subscribed?(question))
+  p= button_to 'Unsubscribe', question.find_subscription(current_user), method: :delete, remote: true, class: 'btn btn-warning'
