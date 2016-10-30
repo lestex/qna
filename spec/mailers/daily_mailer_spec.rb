@@ -1,5 +1,4 @@
 require "rails_helper"
 
-#RSpec.describe DailyMailerMailer, type: :mailer do
-#  pending "add some examples to (or delete) #{__FILE__}"
-#end
+RSpec.describe DailyMailer, type: :mailer do
+end

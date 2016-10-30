@@ -61,8 +61,9 @@ class User < ApplicationRecord
   end
 
   def self.send_daily_digest
+
     find_each.each do |user|
-      DailyMailer.digest(user, Question.daily_created.all.entries).deliver_later
+      DailyMailer.digest(user, Question.created_day_before.all.entries).deliver_later
     end
   end
 end

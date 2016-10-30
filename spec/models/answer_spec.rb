@@ -32,12 +32,12 @@ RSpec.describe Answer, type: :model do
     end
   end
 
-  # describe '.notify_author' do
-  #   it 'sends an email to the question author' do
-  #     expect(AnswerMailer).to receive(:digest).with(question.user).and_call_original
-  #     create(:answer, question: question)
-  #   end
-  # end
+  describe '.notify_author' do
+    it 'sends an email to the question author' do
+      expect(AnswerMailer).to receive(:digest).with(question.user).and_call_original
+      create(:answer, question: question)
+    end
+  end
 
   context 'concern checks' do
     it_behaves_like 'has_user'

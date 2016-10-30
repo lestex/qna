@@ -1,6 +1,6 @@
 class AnswerMailer < ApplicationMailer
-  def digest(user, question)
+  def digest(user)
     mail to: user.email
-    mail subject: "New answer for #{question.title}!"
+    mail subject: "You have a new answer"
   end
 end

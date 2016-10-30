@@ -10,7 +10,7 @@ class Answer < ApplicationRecord
 
   default_scope { order(best: :desc, created_at: :asc )}
 
-  after_create :notify_author
+  after_create :notify_question_author
   
   def mark_best
     transaction do
@@ -21,7 +21,7 @@ class Answer < ApplicationRecord
   end
 
   private
-  def notify_author
-    AnswerMailer.digest(self.question.user, self.question).deliver_later
+  def notify_question_author
+    AnswerMailer.digest(self.question.user).deliver_later
   end
 end
