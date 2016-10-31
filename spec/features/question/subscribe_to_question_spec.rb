@@ -43,12 +43,11 @@ feature 'Subscribe to question' do
     log_in_user(user)
     visit question_path(question)
     click_on 'Subscribe'
-
-    fill_in 'Body', with: 'Answer Body'
-    click_on 'Add answer'
+    fill_in 'answer_body', with: 'Answer Body'
+    click_on 'Answer a question'
     expect(page).to have_content 'Your answer created successfully.'
 
     open_email(user.email)
-    expect(current_email.subject).to eq 'Got a new answer!'
+    expect(current_email.subject).to eq 'You have a new answer'
   end
 end

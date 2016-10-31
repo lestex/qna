@@ -16,4 +16,8 @@ class Question < ApplicationRecord
   def subscribe_author
     self.subscriptions.create(user_id: user_id) if self.valid?
   end
+
+  def find_subscription(user)
+    self.subscriptions.where(user_id: user.id).first
+  end
 end

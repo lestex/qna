@@ -13,7 +13,8 @@ html lang="en"
     = render 'layouts/header'
     
     .container
-      = flash_messages
+      p class="notice" = notice
+      p class="alert" = alert
 
       == yield
 
