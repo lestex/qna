@@ -142,4 +142,16 @@ RSpec.describe User, type: :model do
       User.send_daily_digest
     end
   end
+
+  context '#subscribed?' do
+    let(:user_subscribed) { create(:user) }
+    let(:subscription) { create(:subscription, user_id: user_subscribed.id) }
+    let(:question_subscribed) { create(:question, subscriptions: [subscription]) }
+    it 'returns true if the user is currently subscription to the question' do
+      expect(user_subscribed).to be_subscribed(question_subscribed)
+    end
+    it 'returns false if the user is not currently subscription to the question' do
+      expect(user).to_not be_subscribed(question)
+    end
+  end
 end

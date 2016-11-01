@@ -39,6 +39,18 @@ RSpec.describe Answer, type: :model do
     end
   end
 
+  describe '#send_new_answer_notifications' do
+    let(:users) { create_list(:user, 2) }
+    before do
+      users.each { |user| question.subscriptions << create(:subscription, user_id: user.id) }
+      users << question.user
+    end
+    it 'sends emails to all subscribers' do
+      users.each { |user| expect(AnswerMailer).to receive(:digest).with(user).and_call_original }
+      create(:answer, question: question)
+    end
+  end
+
   context 'concern checks' do
     it_behaves_like 'has_user'
     it_behaves_like 'attachable'
