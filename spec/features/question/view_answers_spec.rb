@@ -1,7 +1,7 @@
 require_relative '../features_helper'
 
 feature 'View question with answers' do
-  given!(:question) { create(:question_with_answers) }
+  let!(:question) { create(:question_with_answers) }
 
   scenario 'user can view answers for question' do
     visit question_path(question)

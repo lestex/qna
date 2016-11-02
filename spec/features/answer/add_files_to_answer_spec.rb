@@ -1,10 +1,10 @@
 require_relative '../features_helper'
 
 feature 'Add files to answer' do
-  given!(:user) { create(:user) }
-  given!(:question) { create(:question) }
-  given!(:answer) { create(:answer, question: question)}
-  given!(:attachment) { create(:attachment, attachable: answer) }
+  let!(:user) { create(:user) }
+  let!(:question) { create(:question) }
+  let!(:answer) { create(:answer, question: question)}
+  let!(:attachment) { create(:attachment, attachable: answer) }
 
   context 'authenticated user' do
 

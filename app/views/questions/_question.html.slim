@@ -6,6 +6,11 @@ div class="panel panel-default question"
     p=  question.body
 
     = render 'votes/question', votable: question
+    - if can?(:create, Subscription.new)
+      div class='subscribe_question' style=('display: none;' if current_user.subscribed?(question))
+        p= button_to 'Subscribe', [question, Subscription.new], method: :post, remote: true, class: 'btn btn-success'
+      .destroy_form
+        = render 'subscriptions/destroy_form', question: question
 
     - if can?(:destroy, question)
       p= link_to 'Delete question', question, method: :delete, remote: true

@@ -8,8 +8,8 @@ h3 Answers
 hr
 .answers
   = render @question.answers
-
-= render 'answers/form'
+- if can?(:create, @answer)
+  = render 'answers/form'
 
 = subscribe_to "/questions/#{@question.id}/comments"
 = subscribe_to "/questions/#{@question.id}/answers"

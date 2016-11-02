@@ -1,7 +1,7 @@
 require_relative '../features_helper'
 
 feature 'Add comment to answer' do
-  given(:answer) { create(:answer) }
+  let(:answer) { create(:answer) }
 
   context 'Authenticated user' do
     before do

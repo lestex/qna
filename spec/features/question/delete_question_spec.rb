@@ -1,8 +1,8 @@
 require_relative '../features_helper'
 
 feature 'delete a question' do
-  given(:user) { create(:user_with_question) }
-  given(:question) { create(:question) }
+  let(:user) { create(:user_with_question) }
+  let(:question) { create(:question) }
 
   context 'authenticated user' do
     scenario 'deletes a question he asked' do

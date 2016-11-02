@@ -6,6 +6,9 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'spec_helper'
 require 'rspec/rails'
 require 'cancan/matchers'
+require 'sidekiq/testing'
+
+Sidekiq::Testing.inline!
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -33,6 +36,8 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.extend  ControllerHelper, type: :controller
   config.include Capybara::DSL
+  config.include(Shoulda::Matchers::ActiveModel, type: :model)
+  config.include(Shoulda::Matchers::ActiveRecord, type: :model)
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 

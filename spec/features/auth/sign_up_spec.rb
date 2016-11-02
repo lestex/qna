@@ -10,7 +10,7 @@ feature 'Sign up' do
 
     expect(page).to have_content 'You have signed up successfully'
   end
-  given(:user) { create(:user) }
+  let(:user) { create(:user) }
   scenario 'Registered user tries to sign up' do
     sign_up_user(user)
 

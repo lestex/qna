@@ -1,8 +1,8 @@
 require_relative '../features_helper'
 
 feature 'Edit answer' do
-  given(:user) { create(:user) }
-  given(:question) { create(:question) }
+  let(:user) { create(:user) }
+  let(:question) { create(:question) }
   before { create(:answer, question: question, user: question.user) }
 
   context 'Authenticated user' do

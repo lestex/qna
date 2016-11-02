@@ -21,7 +21,7 @@ RSpec.describe Answer, type: :model do
     end
   end
 
-  context '.mark_best' do    
+  describe '.mark_best' do    
     it 'sets answer.best to true' do
       answer1.mark_best
       expect(answer1).to be_best
@@ -29,6 +29,25 @@ RSpec.describe Answer, type: :model do
     it 'sets previous best answer to false' do
       answer2.mark_best
       expect(answer1).to_not be_best
+    end
+  end
+
+  describe '.notify_author' do
+    it 'sends an email to the question author' do
+      expect(AnswerMailer).to receive(:digest).with(question.user).and_call_original
+      create(:answer, question: question)
+    end
+  end
+
+  describe '#send_new_answer_notifications' do
+    let(:users) { create_list(:user, 2) }
+    before do
+      users.each { |user| question.subscriptions << create(:subscription, user_id: user.id) }
+      users << question.user
+    end
+    it 'sends emails to all subscribers' do
+      users.each { |user| expect(AnswerMailer).to receive(:digest).with(user).and_call_original }
+      create(:answer, question: question)
     end
   end
 

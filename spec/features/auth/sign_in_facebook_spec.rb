@@ -1,7 +1,7 @@
 require_relative '../features_helper'
 
 feature 'Signing in with Facebook' do
-  given(:user) { create(:user) }
+  let(:user) { create(:user) }
 
   describe 'Registered user tries to sign in' do
     before(:each) { OmniAuth.config.mock_auth[:facebook] = nil }

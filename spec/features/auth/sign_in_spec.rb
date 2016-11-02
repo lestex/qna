@@ -1,7 +1,7 @@
 require_relative '../features_helper'
 
 feature 'Sign in' do
-  given(:user) { create(:user) }
+  let(:user) { create(:user) }
 
   scenario 'Registered user tries to sign in' do
     log_in_user(user)

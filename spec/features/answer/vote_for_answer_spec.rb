@@ -1,8 +1,8 @@
-require_relative '../features_helper.rb'
+require_relative '../features_helper'
 
 feature 'Vote for answer' do
-  given(:user) { create(:user) }
-  given(:answer) { create(:answer) }
+  let(:user) { create(:user) }
+  let(:answer) { create(:answer) }
 
   scenario 'Unauthenticated user cannot vote', js: true  do
     visit question_path(answer.question)
