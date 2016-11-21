@@ -1,0 +1,15 @@
+$('.search-results').html('')
+<% @results.each do |result| %>
+  <% if result.class.to_s == 'Question' %>
+    $('.search-results').append('<%= j "Found question with title '#{result.title}' and body '#{result.body}'" %>')
+  <% elsif result.class.to_s == 'Answer' %>
+    $('.search-results').append('<%= j "Found answer with body '#{result.body}'" %>')
+  <% elsif result.class.to_s == 'Comment' %>
+    $('.search-results').append('<%= j "Found comment with body '#{result.body}'" %>')
+  <% elsif result.class.to_s == 'User' %>
+    $('.search-results').append('<%= j "Found user with email '#{result.email}'" %>')
+  <% end %>
+<% end %>
+<% if @results.empty? %>
+  $('.search-results').html('Nothing found')
+<% end %>

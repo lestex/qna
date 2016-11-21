@@ -7,7 +7,7 @@ h1 Questions
 = subscribe_to "/questions"
 
 .search
-= form_for :search, url: search_path, method: :get, remote: true do |f|
+= form_for :search, url: searches_path, method: :get, remote: true do |f|
   .form-group
     = f.label :text, 'Search text'
     = f.text_field :text, class: 'form-control'
