@@ -1,13 +1,10 @@
 class Search < ApplicationRecord
-  def self.results(search_params)
-    results = []
-    text = ThinkingSphinx::Query.escape search_params[:text]
+  def self.results(params)
+    text = ThinkingSphinx::Query.escape params[:text]
     return results if text.blank?
     
-    %w(questions answers comments users).each do |filter|
-      results += filter.classify.constantize.search(text).to_a if search_params[filter.to_sym]
-    end
-    results = ThinkingSphinx.search(text, classes: [Question, Answer, Comment, User]) if results.blank?
-    results
+    temp_hash = params.except(:text)
+    classes = temp_hash.keys.each.map { |k| k.singularize.classify.constantize }
+    ThinkingSphinx.search(text, classes: classes)
   end
 end

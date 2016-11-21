@@ -1,48 +1,53 @@
 require 'rails_helper'
-require_relative 'concerns/searchable'
 
 RSpec.describe Search, type: :model do
-  let(:question) { create(:question, body: 'some body to find') }
-  let(:answer) { create(:answer, body: 'some body to find') }
-  let(:comment) { create(:comment, body: 'some body to find') }
-  let(:user) { create(:user, email: 'some@mail.ru') }
-  context 'questions' do
-    let(:objects) { 'questions' }
-    let(:text) { question.body }
-    it_behaves_like 'searchable'
-  end
-  context 'answers' do
-    let(:objects) { 'answers' }
-    let(:text) { answer.body }
-    it_behaves_like 'searchable'
-  end
-  context 'answers' do
-    let(:objects) { 'comments' }
-    let(:text) { comment.body }
-    it_behaves_like 'searchable'
-  end
-  context 'answers' do
-    let(:objects) { 'users' }
-    let(:text) { 'some@mail.ru' }
-    it_behaves_like 'searchable'
-  end
-  it 'finds everything' do
-    expect(ThinkingSphinx).to receive(:search).with('some', { classes: [Question, Answer, Comment, User] })
-    Search.results(text: 'some')
-  end
+  
+  describe '.search_for' do
+    context 'search in questions' do
+      let(:params) { { text: 'query', 'questions' => true } }
 
-  it 'does not receive search with empty search' do
-    expect(ThinkingSphinx).to_not receive(:search)
-    Search.results(text: '')
-  end
+      it 'searching questions' do
+        expect(ThinkingSphinx).to receive(:search).with('query', classes: [Question]).and_call_original
+        Search.results(params)
+      end
+    end
 
-  it 'returns nothing with empty search' do
-    results = Search.results(text: '')
-    expect(results).to be_empty
-  end
+    context 'search in answers' do
+      let(:params) { { text: 'query', 'answers' => true } }
 
-  it 'returns nothing with search not containing anything' do
-    results = Search.results(text: 'somethinghere')
-    expect(results).to be_empty
+      it 'searching answers' do
+        expect(ThinkingSphinx).to receive(:search).with('query', classes: [Answer]).and_call_original
+        Search.results(params)
+      end
+    end
+
+    context 'search in comments' do
+      let(:params) { { text: 'query', 'comments' => true } }
+
+      it 'searching comments' do
+        expect(ThinkingSphinx).to receive(:search).with('query', classes: [Comment]).and_call_original
+        Search.results(params)
+      end
+    end
+
+    context 'search in users' do
+      let(:params) { { text: 'query', 'users' => true } }
+
+      it 'searching users' do
+        expect(ThinkingSphinx).to receive(:search).with('query', classes: [User]).and_call_original
+        Search.results(params)
+      end
+    end
+
+    context 'search everywhere' do
+
+      let(:params) { { text: 'query' } }
+
+      it 'searching question with' do
+        expect(ThinkingSphinx).to receive(:search).with('query', classes: []).and_call_original
+        Search.results(params)
+      end
+    end
+
   end
 end
