@@ -9,6 +9,7 @@ RSpec.describe Ability do
     it { should be_able_to :read, [Question, Answer, Comment, Attachment, Vote] }    
 
     it { should be_able_to :set_email, User }
+    it { should be_able_to :read, Search }
 
     it { should_not be_able_to :manage, :all }
   end

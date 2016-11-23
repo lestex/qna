@@ -5,3 +5,20 @@ h1 Questions
     p= link_to question.title, question
 
 = subscribe_to "/questions"
+
+.search
+= form_for :search, url: searches_path, method: :get, remote: true do |f|
+  .form-group
+    = f.label :text, 'Search text'
+    = f.text_field :text, class: 'form-control'
+  .form-group
+    = f.label :questions, 'Questions'
+    = f.check_box :questions, {}, true, false
+    = f.label :answers, 'Answers'
+    = f.check_box :answers, {}, true, false
+    = f.label :comments, 'Comments'
+    = f.check_box :comments, {}, true, false
+    = f.label :users, 'Users'
+    = f.check_box :users, {}, true, false
+  p= f.submit 'Search', class: 'btn btn-primary btn-sm'
+.search-results

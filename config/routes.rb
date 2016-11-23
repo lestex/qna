@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   end
   
   resources :attachments, only: :destroy
+  resource :searches, only: :show
 
   namespace :api do
     namespace :v1 do

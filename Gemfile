@@ -27,6 +27,8 @@ gem 'doorkeeper'
 gem 'active_model_serializers'
 gem 'sidekiq'
 gem 'whenever'
+gem 'mysql2'
+gem 'thinking-sphinx'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
