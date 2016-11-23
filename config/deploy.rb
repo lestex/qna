@@ -2,7 +2,7 @@
 lock '3.6.1'
 
 set :application, 'qna'
-set :repo_url, 'git@github.com:lestex/qna.git'
+set :repo_url, 'https://github.com/lestex/qna.git'
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/home/deployer/qna'
