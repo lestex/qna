@@ -1,15 +1,16 @@
-= render @question
-.question-attachments
-  = render 'attachments/attachments', attachable: @question
-.question-comments
-  = render 'comments/comments', commentable: @question, comment: @comment
+- cache @question do
+  = render @question
+  .question-attachments
+    = render 'attachments/attachments', attachable: @question
+  .question-comments
+    = render 'comments/comments', commentable: @question, comment: @comment
 
-h3 Answers
-hr
-.answers
-  = render @question.answers
-- if can?(:create, @answer)
-  = render 'answers/form'
+  h3 Answers
+  hr
+  .answers
+    = render @question.answers
+  - if can?(:create, @answer)
+    = render 'answers/form'
 
 = subscribe_to "/questions/#{@question.id}/comments"
 = subscribe_to "/questions/#{@question.id}/answers"
