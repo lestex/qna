@@ -1,5 +1,5 @@
 - if answer.persisted?
-  - cache answer do
+  - cache ["signed_in_#{signed_in?}", answer] do
     div class="answer-#{answer.id} #{'best-answer' if answer.best}"
       p=answer.body
       = render 'votes/answer', votable: answer

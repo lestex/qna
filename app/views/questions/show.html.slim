@@ -1,4 +1,4 @@
-- cache @question do
+- cache ["signed_in_#{signed_in?}", @question] do
   = render @question
   .question-attachments
     = render 'attachments/attachments', attachable: @question
