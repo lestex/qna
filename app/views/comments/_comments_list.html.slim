@@ -1,3 +1,4 @@
 - if commentable.comments
   - commentable.comments.each do |c|
-    p= c.body
+    - cache c do
+      p= c.body

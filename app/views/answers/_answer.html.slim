@@ -1,22 +1,23 @@
 - if answer.persisted?
-  div class="answer-#{answer.id} #{'best-answer' if answer.best}"
-    p=answer.body
-    = render 'votes/answer', votable: answer
-    .answer-attachments
-      = render 'attachments/attachments', attachable: answer
-    .answer-comments
-      = render 'comments/comments', commentable: answer, comment: answer.comments.new
+  - cache ["signed_in_#{signed_in?}", answer] do
+    div class="answer-#{answer.id} #{'best-answer' if answer.best}"
+      p=answer.body
+      = render 'votes/answer', votable: answer
+      .answer-attachments
+        = render 'attachments/attachments', attachable: answer
+      .answer-comments
+        = render 'comments/comments', commentable: answer, comment: answer.comments.new
 
-    - if can?(:destroy, answer)
-      p= link_to 'Delete answer', answer_path(answer), method: 'delete', remote: true
-      - unless answer.best?
-        p= link_to 'Mark as best', mark_best_answer_path(answer), method: :put, remote: true
-        
-    - if can?(:update, answer)
-      p= link_to 'Edit answer', '', class: 'edit-answer-link', data: { answer_id: answer.id }
-      = form_for answer, html: { id: "edit-answer-#{answer.id}" }, remote: true do |f|
-       .form-group
-         = f.label :body, 'Answer'
-         = f.text_area :body, class: 'form-control'
-       = f.submit 'Save', class: 'btn btn-primary'
-    hr
+      - if can?(:destroy, answer)
+        p= link_to 'Delete answer', answer_path(answer), method: 'delete', remote: true
+        - unless answer.best?
+          p= link_to 'Mark as best', mark_best_answer_path(answer), method: :put, remote: true
+          
+      - if can?(:update, answer)
+        p= link_to 'Edit answer', '', class: 'edit-answer-link', data: { answer_id: answer.id }
+        = form_for answer, html: { id: "edit-answer-#{answer.id}" }, remote: true do |f|
+         .form-group
+           = f.label :body, 'Answer'
+           = f.text_area :body, class: 'form-control'
+         = f.submit 'Save', class: 'btn btn-primary'
+      hr
